@@ -1,8 +1,9 @@
 ---
 title: "Caso 2(Principal)"
-author: "Joan Lamprea y José Valdés"
+author: "Joan Lamprea y JosÃ© ValdÃ©s"
 date: "2023-05-04"
 output: html_document
+encoding: UTF-8
 ---
 
 ```{r setup, include=FALSE}
@@ -11,8 +12,36 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # Caso 2 de bayesiana
 
-```{r cars}
-summary(cars)
+## Base de datos
+
+```{r}
+# cargar los datos
+load("D:/jose/CasoBayes2/Personas.Rdata")
+# mira Na en ingtot
+sum(is.na(dat$ingtot))
+```
+Teniendo encuenta lo anterior extraeremos de la base de datos las varibles
+para el caso las cuales son **dominio** y **ingtot**. Organizamos los datos
+teniendo encuenta que:  
+
+ 1. Recordamos que la función log tiene base $e$.  
+ 2. La varaible **dominio** es un factor 
+
+```{r}
+#datos que voy a usar
+Data <- data.frame(dat$dominio, dat$ingtot)
+#nombres
+names(Data) <- c("Dominio","Ingtot")
+# pasamos los Ingtot a escala logaritmica
+Data[,2] <- log(Data$Ingtot)
+# comprobar media,varianza  y precisión
+mean(Data$Ingtot)
+var(Data$Ingtot)
+1/var(Data$Ingtot)
+# volver factor domionio
+class(Data$Dominio)
+Data[,1] <- as.factor(Data$Dominio)
+summary(Data$Dominio)
 ```
 
 
