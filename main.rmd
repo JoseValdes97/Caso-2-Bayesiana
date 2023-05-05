@@ -1,9 +1,8 @@
 ---
 title: "Caso 2(Principal)"
-author: "Joan Lamprea y JosÃ© ValdÃ©s"
+author: "Joan Lamprea y Jose Valdes"
 date: "2023-05-04"
 output: html_document
-encoding: UTF-8
 ---
 
 ```{r setup, include=FALSE}
@@ -34,6 +33,8 @@ Data <- data.frame(dat$dominio, dat$ingtot)
 names(Data) <- c("Dominio","Ingtot")
 # pasamos los Ingtot a escala logaritmica
 Data[,2] <- log(Data$Ingtot)
+# presentar datos
+head(Data)
 # comprobar media,varianza  y precisión
 mean(Data$Ingtot)
 var(Data$Ingtot)

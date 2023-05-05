@@ -9,7 +9,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Joan Lamprea y JosÃ© ValdÃ©s" />
+<meta name="author" content="Joan Lamprea y Jose Valdes" />
 
 <meta name="date" content="2023-05-04" />
 
@@ -351,7 +351,7 @@ display: none;
 
 
 <h1 class="title toc-ignore">Caso 2(Principal)</h1>
-<h4 class="author">Joan Lamprea y JosÃ© ValdÃ©s</h4>
+<h4 class="author">Joan Lamprea y Jose Valdes</h4>
 <h4 class="date">2023-05-04</h4>
 
 </div>
@@ -381,7 +381,16 @@ Data &lt;- data.frame(dat$dominio, dat$ingtot)
 names(Data) &lt;- c(&quot;Dominio&quot;,&quot;Ingtot&quot;)
 # pasamos los Ingtot a escala logaritmica
 Data[,2] &lt;- log(Data$Ingtot)
-# comprobar media,varianza  y precisión
+# presentar datos
+head(Data)</code></pre>
+<pre><code>##   Dominio   Ingtot
+## 1 ARMENIA 15.11910
+## 2 ARMENIA 14.22098
+## 3 ARMENIA 15.00162
+## 4 ARMENIA 10.81978
+## 5 ARMENIA 14.22098
+## 6 ARMENIA 14.07643</code></pre>
+<pre class="r"><code># comprobar media,varianza  y precisión
 mean(Data$Ingtot)</code></pre>
 <pre><code>## [1] 13.49516</code></pre>
 <pre class="r"><code>var(Data$Ingtot)</code></pre>
