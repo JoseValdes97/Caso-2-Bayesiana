@@ -6,6 +6,7 @@ output: html_document
 ---
 
 ```{r setup, include=FALSE}
+suppressMessages(suppressWarnings(library(dplyr)))
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
@@ -44,5 +45,40 @@ class(Data$Dominio)
 Data[,1] <- as.factor(Data$Dominio)
 summary(Data$Dominio)
 ```
+
+Ahora con esto obtendremos los datos que nos son relevantes para eltrabajo  
+desde la base de datos cómo:
+
+```{r}
+# m <- Cantidad de dominios (Departamentos)
+m <- length(table(Data$Dominio))
+m
+# n <- número de individuos
+n <- sum(table(Data$Dominio))
+n
+```
+
+Obtendremos una tabla con los estadísticos necesarios por dominio para trabajar con las distribuciones condicionales completas y tener una idea de los datos.
+
+ 1. la función **n()** solo funciona dentro de una funcion actual como summarise     en el estado actual y devuelve el tamaño del grupo
+
+```{r}
+# tabla con los estadisticos
+Estadisticos <- Data %>% 
+      group_by(Dominio) %>% 
+      summarise(Dominio = unique(Dominio), nj = n(), yb = mean(Ingtot),
+                s2 = var(Ingtot))
+head(Estadisticos)
+# almacenar info importante
+nj <- Estadisticos$nj
+yb <- Estadisticos$yb
+s2 <- Estadisticos$s2
+```
+
+
+
+
+
+
 
 
