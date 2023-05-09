@@ -412,6 +412,44 @@ summary(Data$Dominio)</code></pre>
 ##           116            82           414           101           345 
 ##   SANTA MARTA     SINCELEJO         TUNJA    VALLEDUPAR VILLAVICENCIO 
 ##           131           154           116           155           113</code></pre>
+<p>Ahora con esto obtendremos los datos que nos son relevantes para
+eltrabajo<br />
+desde la base de datos cómo:</p>
+<pre class="r"><code># m &lt;- Cantidad de dominios (Departamentos)
+m &lt;- length(table(Data$Dominio))
+m</code></pre>
+<pre><code>## [1] 25</code></pre>
+<pre class="r"><code># n &lt;- número de individuos
+n &lt;- sum(table(Data$Dominio))
+n</code></pre>
+<pre><code>## [1] 3820</code></pre>
+<p>Obtendremos una tabla con los estadísticos necesarios por dominio
+para trabajar con las distribuciones condicionales completas y tener una
+idea de los datos.</p>
+<ol style="list-style-type: decimal">
+<li>la función <strong>n()</strong> solo funciona dentro de una funcion
+actual como summarise en el estado actual y devuelve el tamaño del
+grupo</li>
+</ol>
+<pre class="r"><code># tabla con los estadisticos
+Estadisticos &lt;- Data %&gt;% 
+      group_by(Dominio) %&gt;% 
+      summarise(Dominio = unique(Dominio), nj = n(), yb = mean(Ingtot),
+                s2 = var(Ingtot))
+head(Estadisticos)</code></pre>
+<pre><code>## # A tibble: 6 × 4
+##   Dominio         nj    yb    s2
+##   &lt;fct&gt;        &lt;int&gt; &lt;dbl&gt; &lt;dbl&gt;
+## 1 ARMENIA        133  13.6  1.26
+## 2 BARRANQUILLA   214  13.4  1.16
+## 3 BOGOTA         165  13.8  1.38
+## 4 BUCARAMANGA    125  13.8  1.06
+## 5 CALI           166  13.6  1.18
+## 6 CARTAGENA      131  13.4  1.08</code></pre>
+<pre class="r"><code># almacenar info importante
+nj &lt;- Estadisticos$nj
+yb &lt;- Estadisticos$yb
+s2 &lt;- Estadisticos$s2</code></pre>
 </div>
 </div>
 
