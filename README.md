@@ -9,7 +9,4 @@ siguiente:
 3. trabajar cada modelo en scripts aparte, pero cómo todo es un solo proyecto 
       el ambiente sera único eso espero facilite el trabajo con los modelos
 4. abierto a sugerencias y cambios 
-=======
-# Diplomado_Ciencia_Datos
-# Diplomado_Ciencia_Datos
->>>>>>> e65f0a1e628c7ab3c7b77d8f6a83d0d9d9064179
+
