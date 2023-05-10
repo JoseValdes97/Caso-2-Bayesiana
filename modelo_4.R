@@ -1,5 +1,5 @@
-# Tercer modelo
-MCMC_3 <- function(y,B, nj, yb, s2) {
+# modelo 4
+MCMC_4 <- function(y,B, nj, yb, s2) {
       # tamaños
       n <- sum(nj)
       m <- length(nj)
