@@ -9,8 +9,8 @@ MCMC_4 <- function(y,B,nj) {
       be0  <- 0.846 
       kp   <- 3
       # valores iniciales
-      theta <- mean(y)
-      sig2  <- var(y)  # sigma_j^2
+      theta <- mean(yb)
+      sig2  <- mean(s2)  # sigma_j^2
       # almacenamiento
       THETA <- matrix(data = NA, nrow = B, ncol = 2)
       LL    <- matrix(data = NA, nrow = B, ncol = 1)
