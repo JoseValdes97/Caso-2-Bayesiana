@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 ## README
 
 Este repositorio es para el caso 2 de bayesiana mi idea de trabajo es la 
@@ -8,3 +9,4 @@ siguiente:
 3. trabajar cada modelo en scripts aparte, pero cómo todo es un solo proyecto 
       el ambiente sera único eso espero facilite el trabajo con los modelos
 4. abierto a sugerencias y cambios 
+
