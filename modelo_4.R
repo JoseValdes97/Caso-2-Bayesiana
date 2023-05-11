@@ -10,7 +10,8 @@ MCMC_4 <- function(y,B,nj) {
       kp   <- 3
       # valores iniciales
       theta <- mean(yb)
-      sig2  <- mean(s2)  # sigma_j^2
+      set.seed(0511)
+      sig2  <- rgamma(n=1, shape = al0/2, rate = be0/2)
       # almacenamiento
       THETA <- matrix(data = NA, nrow = B, ncol = 2)
       LL    <- matrix(data = NA, nrow = B, ncol = 1)

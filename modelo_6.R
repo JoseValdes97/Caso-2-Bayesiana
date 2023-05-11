@@ -45,9 +45,9 @@ MCMC_6 <- function(y, B, nj, yb){
             # actualizar tau2
             tau2      <- 1/rgamma(n = 1, shape = 0.5*(eta0 + m), rate = 0.5*(eta0*t20+(m-1)*var(theta)+m*(mean(theta)-mu)^2))
             # actualizar sigma_j^2
-            sig2      <- rgamma(n = m, shape = 0.5*(k*nj+al), rate = (0.5*(k*sum1 + beta)))
+            sig2      <- rgamma(n = m, shape = 0.5*((k*nj)+al), rate = (0.5*(k*sum1 + beta)))
             # crear beta y actualizar
-            beta      <- rgamma(n = 1, shape=0.5*(ab+al*m),rate = 0.5*(sum(sig2)+bb))
+            beta      <- rgamma(n = 1, shape=0.5*(ab+(al*m)),rate = 0.5*(sum(sig2)+bb))
             # almacenar
             THETA[b,] <- c(theta, sig2, mu, tau2, beta)
             # log-verosimilitud

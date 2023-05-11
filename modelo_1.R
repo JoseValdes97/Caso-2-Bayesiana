@@ -16,7 +16,6 @@ MCMC_1 <- function(y, B) {
       LL    <- matrix(data = NA, nrow = B, ncol = 1)
       # Valores iniciales
       # valor inicial: simular de la previa o estadísticos, ya que tiene sentido usarlos
-      set.seed(2023)
       theta <- mean_y
       sig2  <- var_y
       # cadena
