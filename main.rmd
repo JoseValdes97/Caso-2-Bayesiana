@@ -547,4 +547,113 @@ rownames(tab) <- c("Observado","Estimado","PPP")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
+## Ranking bayesiano
+
+Usaremos el **modelo 6** para realizar un ranking bayesiano basado en las estimaciones puntuales y los intervalos de credibilidad dados para cada promedio por dominio teniendo en cuenta lo siguiente:
+
+1. Hacer la visualización en escala logarítmica. 
+2. Rojo oscuro para efectos promedio significativamente inferiores a 13.830
+3. Negro para efectos promedio que no difieren significativamente de 13.830 
+4. Verde oscuro para efectos promedio significativamente superiores a 13.830 
+5. Observe que 13.830 corresponde a un SMLMV de 2022 en escala logarítmica.
+
+```{r}
+#ranking
+THETA    <- cadena1_M6$THETA
+Dominios <- Estadisticos$Dominio
+#Estimaciones puntuales
+that     <- colMeans(THETA[,1:m])
+# Int. credibilidad al 95%
+IC95    <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
+# ordernar el ranking (menor a mayor)
+orden    <- order(that)
+Dominios <- Dominios[orden]
+that     <- that[orden]
+IC95     <- IC95[,orden]
+# Colores
+colo <- rep(2,m)
+colo[which(IC95[1,]>13.830)] <- 1
+colo[which(IC95[2,]<13.830)] <- 3
+colo <- c("green3","black","red3")[colo]
+#Gráfico
+par(mfrow = c(1,1), mar = c(4,10,1.5,1), mgp = c(2.5,0.75,0))
+plot(NA, NA, xlab = "Ingreso total", ylab = "", main = "Ranking Bayesisano: Modelo 6", xlim = c(12.8,14.3), ylim = c(1,m), cex.axis = 0.75, yaxt = "n")
+axis(side = 2, at = 1:m, labels = Dominios, las = 2)
+abline(v = 13.830,  col = "gray", lwd = 3)
+abline(h = 1:m, col = "lightgray", lwd = 1)
+# intervalo y estimación puntual
+for (j in 1:m) {
+  segments(x0 = IC95[1,j], y0 = j, x1 = IC95[2,j], y1 = j, col = colo[j])
+  lines(x = that[j], y = j, type = "p", pch = 16, cex = 0.8, col = colo[j])
+}
+
+```
+
+## Estimaciones para el top 5 del ranking
+
+Usando el **modelo 6** y de acuerdo con el ranking anterior el top 5 son los  siguietnes domingos **dominios**:
+
+1. Medellin
+2. Manizales
+3. Tunja
+4. Bogota
+5. Bucaramanga
+
+Usaremos la **Distribución predictiva posterior** para poder estimar puntualmente  la media, la desviación estandar y el coeficiente de variación de ada dominio.
+
+```{r}
+# informacion del top 5
+THETA_top5 <- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
+n_top5 <- nj[c(11, 10, 23, 3, 4)]
+# Simulacion para estimar
+#distribución predictiva posterior
+yb_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
+des_MCMC     <- matrix(data = NA, nrow=10000, ncol = 5)
+cv_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
+#Muestreo
+set.seed(1908) #año del artículo  Biometrika
+for (i in 1:10000) {
+      #datos
+      y_pre_Me <- rt.scaled(n = n_top5[1], df = 3, mean = THETA_top5[i,1], sd = sqrt(THETA_top5[i,6]))
+      y_pre_Ma <- rt.scaled(n = n_top5[2], df = 3, mean = THETA_top5[i,2], sd = sqrt(THETA_top5[i,7]))
+      y_pre_Tu <- rt.scaled(n = n_top5[3], df = 3, mean = THETA_top5[i,3], sd = sqrt(THETA_top5[i,8]))
+      y_pre_Bo <- rt.scaled(n = n_top5[4], df = 3, mean = THETA_top5[i,4], sd = sqrt(THETA_top5[i,9]))
+      y_pre_Bu <- rt.scaled(n = n_top5[5], df = 3, mean = THETA_top5[i,5], sd = sqrt(THETA_top5[i,10]))
+      #estadisticas Medellin
+      yb_MCMC[i,1]  <- mean(y_pre_Me)
+      des_MCMC[i,1] <- sd(y_pre_Me)
+      cv_MCMC[i,1]  <- sd(y_pre_Me)/mean(y_pre_Me) * 100
+      #estadisticas Manizales
+      yb_MCMC[i,2]  <- mean(y_pre_Ma)
+      des_MCMC[i,2] <- sd(y_pre_Ma)
+      cv_MCMC[i,2]  <- sd(y_pre_Ma)/mean(y_pre_Ma) * 100
+      #estadisticas Tunja
+      yb_MCMC[i,3]  <- mean(y_pre_Tu)
+      des_MCMC[i,3] <- sd(y_pre_Tu)
+      cv_MCMC[i,3]  <- sd(y_pre_Tu)/mean(y_pre_Tu) * 100
+      #estadisticas Bogotá
+      yb_MCMC[i,4]  <- mean(y_pre_Bo)
+      des_MCMC[i,4] <- sd(y_pre_Bo)
+      cv_MCMC[i,4]  <- sd(y_pre_Bo)/mean(y_pre_Bo) * 100
+      #estadisticas Bucaramanga
+      yb_MCMC[i,5]  <- mean(y_pre_Bu)
+      des_MCMC[i,5] <- sd(y_pre_Bu)
+      cv_MCMC[i,5]  <- sd(y_pre_Bu)/mean(y_pre_Bu) * 100
+}
+# tabla de resumen
+tab <- matrix(c(mean(yb_MCMC[,1]), mean(yb_MCMC[,2]), mean(yb_MCMC[,3]), mean(yb_MCMC[,4]), mean(yb_MCMC[,5]),
+                mean(des_MCMC[,1]), mean(des_MCMC[,2]), mean(des_MCMC[,3]), mean(des_MCMC[,4]), mean(des_MCMC[,5]),
+                mean(cv_MCMC[,1]), mean(cv_MCMC[,2]), mean(cv_MCMC[,3]), mean(cv_MCMC[,4]), mean(cv_MCMC[,5])),
+              nrow = 3, ncol = 5, byrow = T)
+#tab[1,] <- exp(tab[1,])
+#tab[2,] <- exp(tab[2,])
+colnames(tab) <- c("Med.", "Man.", "Tun.","Bog.", "Buca.")
+rownames(tab) <- c("Media","Des. Esta.","CV %")
+knitr::kable(x = tab, digits = 3, align = "c")
+```
+
+
+
+
+
 
