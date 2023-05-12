@@ -562,9 +562,9 @@ Usaremos el **modelo 6** para realizar un ranking bayesiano basado en las estima
 THETA    <- cadena1_M6$THETA
 Dominios <- Estadisticos$Dominio
 #Estimaciones puntuales
-that     <- colMeans(THETA[,1:m])
+that <- colMeans(THETA[,1:m])
 # Int. credibilidad al 95%
-IC95    <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
+IC95 <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
 # ordernar el ranking (menor a mayor)
 orden    <- order(that)
 Dominios <- Dominios[orden]
@@ -604,51 +604,20 @@ Usaremos la **Distribución predictiva posterior** para poder estimar puntualmen
 ```{r}
 # informacion del top 5
 THETA_top5 <- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
-n_top5 <- nj[c(11, 10, 23, 3, 4)]
-# Simulacion para estimar
-#distribución predictiva posterior
-yb_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
-des_MCMC     <- matrix(data = NA, nrow=10000, ncol = 5)
-cv_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
-#Muestreo
-set.seed(1908) #año del artículo  Biometrika
-for (i in 1:10000) {
-      #datos
-      y_pre_Me <- rt.scaled(n = n_top5[1], df = 3, mean = THETA_top5[i,1], sd = sqrt(THETA_top5[i,6]))
-      y_pre_Ma <- rt.scaled(n = n_top5[2], df = 3, mean = THETA_top5[i,2], sd = sqrt(THETA_top5[i,7]))
-      y_pre_Tu <- rt.scaled(n = n_top5[3], df = 3, mean = THETA_top5[i,3], sd = sqrt(THETA_top5[i,8]))
-      y_pre_Bo <- rt.scaled(n = n_top5[4], df = 3, mean = THETA_top5[i,4], sd = sqrt(THETA_top5[i,9]))
-      y_pre_Bu <- rt.scaled(n = n_top5[5], df = 3, mean = THETA_top5[i,5], sd = sqrt(THETA_top5[i,10]))
-      #estadisticas Medellin
-      yb_MCMC[i,1]  <- mean(y_pre_Me)
-      des_MCMC[i,1] <- sd(y_pre_Me)
-      cv_MCMC[i,1]  <- sd(y_pre_Me)/mean(y_pre_Me) * 100
-      #estadisticas Manizales
-      yb_MCMC[i,2]  <- mean(y_pre_Ma)
-      des_MCMC[i,2] <- sd(y_pre_Ma)
-      cv_MCMC[i,2]  <- sd(y_pre_Ma)/mean(y_pre_Ma) * 100
-      #estadisticas Tunja
-      yb_MCMC[i,3]  <- mean(y_pre_Tu)
-      des_MCMC[i,3] <- sd(y_pre_Tu)
-      cv_MCMC[i,3]  <- sd(y_pre_Tu)/mean(y_pre_Tu) * 100
-      #estadisticas Bogotá
-      yb_MCMC[i,4]  <- mean(y_pre_Bo)
-      des_MCMC[i,4] <- sd(y_pre_Bo)
-      cv_MCMC[i,4]  <- sd(y_pre_Bo)/mean(y_pre_Bo) * 100
-      #estadisticas Bucaramanga
-      yb_MCMC[i,5]  <- mean(y_pre_Bu)
-      des_MCMC[i,5] <- sd(y_pre_Bu)
-      cv_MCMC[i,5]  <- sd(y_pre_Bu)/mean(y_pre_Bu) * 100
-}
+#Estimaciones
+yb_top5 <- colMeans(THETA_top5[,1:5])
+sd_top5 <- sqrt(3*colMeans(THETA_top5[,6:10]))
+cv_top5 <- (sd_top5/yb_top5) *100
+# pasar a escala normal
+yb_top5 <- exp(yb_top5)
+sd_top5 <- exp(sd_top5)
 # tabla de resumen
-tab <- matrix(c(mean(yb_MCMC[,1]), mean(yb_MCMC[,2]), mean(yb_MCMC[,3]), mean(yb_MCMC[,4]), mean(yb_MCMC[,5]),
-                mean(des_MCMC[,1]), mean(des_MCMC[,2]), mean(des_MCMC[,3]), mean(des_MCMC[,4]), mean(des_MCMC[,5]),
-                mean(cv_MCMC[,1]), mean(cv_MCMC[,2]), mean(cv_MCMC[,3]), mean(cv_MCMC[,4]), mean(cv_MCMC[,5])),
-              nrow = 3, ncol = 5, byrow = T)
-#tab[1,] <- exp(tab[1,])
-#tab[2,] <- exp(tab[2,])
-colnames(tab) <- c("Med.", "Man.", "Tun.","Bog.", "Buca.")
-rownames(tab) <- c("Media","Des. Esta.","CV %")
+tab <- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
+                sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
+                cv_top5[1], cv_top5[2], cv_top5[3], cv_top5[4], cv_top5[5]),nrow = 3,
+              ncol = 5, byrow = T)
+colnames(tab) <- c("Med", "Man", "Tun","Bog", "Buca")
+rownames(tab) <- c("Media","SD","CV%")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 

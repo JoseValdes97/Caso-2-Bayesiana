@@ -489,7 +489,7 @@ tictoc::tic()
 set.seed(1856)
 cadena1_M2 &lt;- MCMC_2(y, B = 11000, nj, yb, s2)
 tictoc::toc()</code></pre>
-<pre><code>## 3.56 sec elapsed</code></pre>
+<pre><code>## 3.58 sec elapsed</code></pre>
 <div id="convergencia-1" class="section level3">
 <h3>Convergencia</h3>
 <p>Usaremos la log-verosimilitud para mirar la convergencia de la
@@ -531,7 +531,7 @@ tictoc::tic()
 set.seed(1856)
 cadena1_M4 &lt;- MCMC_4(y,B = 11000, nj)
 tictoc::toc()</code></pre>
-<pre><code>## 10.69 sec elapsed</code></pre>
+<pre><code>## 10.97 sec elapsed</code></pre>
 <div id="convergencia-3" class="section level3">
 <h3>Convergencia</h3>
 <p>Usaremos la log-verosimilitud para mirar la convergencia de la
@@ -552,7 +552,7 @@ tictoc::tic()
 set.seed(1856)
 cadena1_M5 &lt;- MCMC_5(y,B = 11000, nj, yb)
 tictoc::toc()</code></pre>
-<pre><code>## 11.39 sec elapsed</code></pre>
+<pre><code>## 12 sec elapsed</code></pre>
 <div id="convergencia-4" class="section level3">
 <h3>Convergencia</h3>
 <p>Usaremos la log-verosimilitud para mirar la convergencia de la
@@ -573,7 +573,7 @@ tictoc::tic()
 set.seed(1856)
 cadena1_M6 &lt;- MCMC_6(y,B = 11000, nj, yb)
 tictoc::toc()</code></pre>
-<pre><code>## 13.58 sec elapsed</code></pre>
+<pre><code>## 14.01 sec elapsed</code></pre>
 <div id="convergencia-5" class="section level3">
 <h3>Convergencia</h3>
 <p>Usaremos la log-verosimilitud para mirar la convergencia de la
@@ -997,9 +997,9 @@ logarítmica.</li>
 THETA    &lt;- cadena1_M6$THETA
 Dominios &lt;- Estadisticos$Dominio
 #Estimaciones puntuales
-that     &lt;- colMeans(THETA[,1:m])
+that &lt;- colMeans(THETA[,1:m])
 # Int. credibilidad al 95%
-IC95    &lt;- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
+IC95 &lt;- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
 # ordernar el ranking (menor a mayor)
 orden    &lt;- order(that)
 Dominios &lt;- Dominios[orden]
@@ -1040,87 +1040,64 @@ poder estimar puntualmente la media, la desviación estandar y el
 coeficiente de variación de ada dominio.</p>
 <pre class="r"><code># informacion del top 5
 THETA_top5 &lt;- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
-n_top5 &lt;- nj[c(11, 10, 23, 3, 4)]
-# Simulacion para estimar
-#distribución predictiva posterior
-yb_MCMC      &lt;- matrix(data = NA, nrow=10000, ncol = 5)
-des_MCMC     &lt;- matrix(data = NA, nrow=10000, ncol = 5)
-cv_MCMC      &lt;- matrix(data = NA, nrow=10000, ncol = 5)
-#Muestreo
-set.seed(1908) #año del artículo  Biometrika
-for (i in 1:10000) {
-      #datos
-      y_pre_Me &lt;- rt.scaled(n = n_top5[1], df = 3, mean = THETA_top5[i,1], sd = sqrt(THETA_top5[i,6]))
-      y_pre_Ma &lt;- rt.scaled(n = n_top5[2], df = 3, mean = THETA_top5[i,2], sd = sqrt(THETA_top5[i,7]))
-      y_pre_Tu &lt;- rt.scaled(n = n_top5[3], df = 3, mean = THETA_top5[i,3], sd = sqrt(THETA_top5[i,8]))
-      y_pre_Bo &lt;- rt.scaled(n = n_top5[4], df = 3, mean = THETA_top5[i,4], sd = sqrt(THETA_top5[i,9]))
-      y_pre_Bu &lt;- rt.scaled(n = n_top5[5], df = 3, mean = THETA_top5[i,5], sd = sqrt(THETA_top5[i,10]))
-      #estadisticas Medellin
-      yb_MCMC[i,1]  &lt;- mean(y_pre_Me)
-      des_MCMC[i,1] &lt;- sd(y_pre_Me)
-      cv_MCMC[i,1]  &lt;- sd(y_pre_Me)/mean(y_pre_Me) * 100
-      #estadisticas Manizales
-      yb_MCMC[i,2]  &lt;- mean(y_pre_Ma)
-      des_MCMC[i,2] &lt;- sd(y_pre_Ma)
-      cv_MCMC[i,2]  &lt;- sd(y_pre_Ma)/mean(y_pre_Ma) * 100
-      #estadisticas Tunja
-      yb_MCMC[i,3]  &lt;- mean(y_pre_Tu)
-      des_MCMC[i,3] &lt;- sd(y_pre_Tu)
-      cv_MCMC[i,3]  &lt;- sd(y_pre_Tu)/mean(y_pre_Tu) * 100
-      #estadisticas Bogotá
-      yb_MCMC[i,4]  &lt;- mean(y_pre_Bo)
-      des_MCMC[i,4] &lt;- sd(y_pre_Bo)
-      cv_MCMC[i,4]  &lt;- sd(y_pre_Bo)/mean(y_pre_Bo) * 100
-      #estadisticas Bucaramanga
-      yb_MCMC[i,5]  &lt;- mean(y_pre_Bu)
-      des_MCMC[i,5] &lt;- sd(y_pre_Bu)
-      cv_MCMC[i,5]  &lt;- sd(y_pre_Bu)/mean(y_pre_Bu) * 100
-}
+#Estimaciones
+yb_top5 &lt;- colMeans(THETA_top5[,1:5])
+sd_top5 &lt;- sqrt(3*colMeans(THETA_top5[,6:10]))
+cv_top5 &lt;- (sd_top5/yb_top5) *100
+# pasar a escala normal
+yb_top5 &lt;- exp(yb_top5)
+sd_top5 &lt;- exp(sd_top5)
 # tabla de resumen
-tab &lt;- matrix(c(mean(yb_MCMC[,1]), mean(yb_MCMC[,2]), mean(yb_MCMC[,3]), mean(yb_MCMC[,4]), mean(yb_MCMC[,5]),
-                mean(des_MCMC[,1]), mean(des_MCMC[,2]), mean(des_MCMC[,3]), mean(des_MCMC[,4]), mean(des_MCMC[,5]),
-                mean(cv_MCMC[,1]), mean(cv_MCMC[,2]), mean(cv_MCMC[,3]), mean(cv_MCMC[,4]), mean(cv_MCMC[,5])),
-              nrow = 3, ncol = 5, byrow = T)
-#tab[1,] &lt;- exp(tab[1,])
-#tab[2,] &lt;- exp(tab[2,])
-colnames(tab) &lt;- c(&quot;Med.&quot;, &quot;Man.&quot;, &quot;Tun.&quot;,&quot;Bog.&quot;, &quot;Buca.&quot;)
-rownames(tab) &lt;- c(&quot;Media&quot;,&quot;Des. Esta.&quot;,&quot;CV %&quot;)
+tab &lt;- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
+                sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
+                cv_top5[1], cv_top5[2], cv_top5[3], cv_top5[4], cv_top5[5]),nrow = 3,
+              ncol = 5, byrow = T)
+colnames(tab) &lt;- c(&quot;Med&quot;, &quot;Man&quot;, &quot;Tun&quot;,&quot;Bog&quot;, &quot;Buca&quot;)
+rownames(tab) &lt;- c(&quot;Media&quot;,&quot;SD&quot;,&quot;CV%&quot;)
 knitr::kable(x = tab, digits = 3, align = &quot;c&quot;)</code></pre>
-<table>
+<table style="width:100%;">
+<colgroup>
+<col width="8%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+<col width="18%" />
+</colgroup>
 <thead>
 <tr class="header">
 <th align="left"></th>
-<th align="center">Med.</th>
-<th align="center">Man.</th>
-<th align="center">Tun.</th>
-<th align="center">Bog.</th>
-<th align="center">Buca.</th>
+<th align="center">Med</th>
+<th align="center">Man</th>
+<th align="center">Tun</th>
+<th align="center">Bog</th>
+<th align="center">Buca</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td align="left">Media</td>
-<td align="center">14.019</td>
-<td align="center">13.962</td>
-<td align="center">13.947</td>
-<td align="center">13.940</td>
-<td align="center">13.839</td>
+<td align="center">1225592.314</td>
+<td align="center">1158832.449</td>
+<td align="center">1140575.937</td>
+<td align="center">1131724.376</td>
+<td align="center">1023513.016</td>
 </tr>
 <tr class="even">
-<td align="left">Des. Esta.</td>
-<td align="center">1.121</td>
-<td align="center">0.922</td>
-<td align="center">1.120</td>
-<td align="center">1.330</td>
-<td align="center">1.235</td>
+<td align="left">SD</td>
+<td align="center">3.184</td>
+<td align="center">2.615</td>
+<td align="center">3.210</td>
+<td align="center">3.975</td>
+<td align="center">3.643</td>
 </tr>
 <tr class="odd">
-<td align="left">CV %</td>
-<td align="center">7.999</td>
-<td align="center">6.607</td>
-<td align="center">8.031</td>
-<td align="center">9.545</td>
-<td align="center">8.923</td>
+<td align="left">CV%</td>
+<td align="center">8.261</td>
+<td align="center">6.886</td>
+<td align="center">8.362</td>
+<td align="center">9.899</td>
+<td align="center">9.342</td>
 </tr>
 </tbody>
 </table>
