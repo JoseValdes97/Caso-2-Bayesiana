@@ -282,3 +282,269 @@ plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim 
 lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
 lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
 ```
+
+## Comparación de modelos
+
+primero hacremos un analsis de los modelos para su densidad
+
+```{r}
+#gráfico fondo
+plot(x = NA, y = NA, ylab = "Densidad", xlab = "Log-verosimilitud", cex.axis = 0.7, xlim = range(as.numeric(cadena1_M5$LL$ll), as.numeric(cadena1_M6$LL$ll),as.numeric(cadena1_M2$LL$ll),as.numeric(cadena1_M3$LL$ll)), ylim = c(0,0.12))
+# modelo dos
+hist(as.numeric(cadena1_M2$LL$ll), freq = F, add = T, col = "lightblue", border = "lightblue")
+lines(density(as.numeric(cadena1_M2$LL$ll)), col = "blue")
+# modelos tres
+hist(as.numeric(cadena1_M3$LL$ll), freq = F, add = T, col = "burlywood", border = "burlywood")
+lines(density(as.numeric(cadena1_M3$LL$ll)), col = "brown")
+# modelos cinco
+hist(as.numeric(cadena1_M5$LL$ll), freq = F, add = T, col = "mistyrose", border = "mistyrose")
+lines(density(as.numeric(cadena1_M5$LL$ll)), col = "magenta")
+# modelos seis
+hist(as.numeric(cadena1_M6$LL$ll), freq = F, add = T, col = "lightgreen", border = "lightgreen")
+lines(density(as.numeric(cadena1_M6$LL$ll)), col = "green")
+# cuadro legendario
+legend("top", legend = c("Modelo 2","Modelo 3","Modelo 5","Modelo 6"), fill = c("lightblue", "burlywood", "mistyrose", "lightgreen"), border = c("blue", "brown", "magenta", "green"), bty = "n")
+```
+
+Notamos que los modelos t tienen una **log-verosimilitud** más grande que los modelos **normales**, también se puede ver que destaca el modelo **modelo 6** por encima de los demas con el valor más alto de **log-vegosimilitud promedio**
+
+### Compración modelos
+
+Usaremos el DIC para cada uno de los modelos
+
+#### modelo 1
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M1$LL$ll)
+# estimación theta_bayes
+theta_hat  <- mean(cadena1_M1$THETA$theta)
+# estimación sig2_bayes
+sigma2_hat <- mean(cadena1_M1$THETA$sig2)
+# log-verosimilitud con parámetros estimacdos
+lpyth_m1   <- sum(dnorm(x = y, mean = theta_hat, sd = sqrt(sigma2_hat), log = T))
+lpyth_m1
+# oenalización por cantidad de parámetros
+pDIC_m1    <- 2*(lpyth_m1 - mean(LP1))
+pDIC_m1
+# Criterio DIC
+DIC_m1     <- -2*lpyth_m1 + 2*pDIC_m1
+DIC_m1
+```
+
+#### modelo 2
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M2$LL$ll)
+# estimación theta_bayes
+theta_hat  <- colMeans(cadena1_M2$THETA[,1:m])
+# estimación sig2_bayes
+sigma2_hat <- mean(cadena1_M2$THETA$sig2)
+# log-verosimilitud con parámetros estimacdos
+lpyth_m2   <- sum(dnorm(x = y, mean = rep(theta_hat,nj), sd = sqrt(sigma2_hat), log = T))
+lpyth_m2
+# oenalización por cantidad de parámetros
+pDIC_m2    <- 2*(lpyth_m2 - mean(LP1))
+pDIC_m2
+# Criterio DIC
+DIC_m2     <- -2*lpyth_m2 + 2*pDIC_m2
+DIC_m2
+```
+
+#### modelo 3
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M3$LL$ll)
+# estimación theta_bayes
+theta_hat  <- colMeans(cadena1_M3$THETA[,1:m])
+# estimación sig2_bayes
+sigma2_hat <- colMeans(cadena1_M3$THETA[,(m+1):(2*m)])
+# log-verosimilitud con parámetros estimacdos
+lpyth_m3   <- sum(dnorm(x = y, mean = rep(theta_hat,nj), sd = sqrt(rep(sigma2_hat, nj)), log = T))
+lpyth_m3
+# oenalización por cantidad de parámetros
+pDIC_m3    <- 2*(lpyth_m3 - mean(LP1))
+pDIC_m3
+# Criterio DIC
+DIC_m3     <- -2*lpyth_m3 + 2*pDIC_m3
+DIC_m3
+```
+
+#### modelo 4
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M4$LL$ll)
+# estimación theta_bayes
+theta_hat  <- mean(cadena1_M4$THETA$theta)
+# estimación sig2_bayes
+sigma2_hat <- mean(cadena1_M4$THETA$sig2)
+# log-verosimilitud con parámetros estimacdos
+lpyth_m4   <- sum(dt.scaled(x = y, df = 3, mean = theta_hat, sd = sqrt(sigma2_hat), log = T))
+lpyth_m4
+# oenalización por cantidad de parámetros
+pDIC_m4    <- 2*(lpyth_m4 - mean(LP1))
+pDIC_m4
+# Criterio DIC
+DIC_m4     <- -2*lpyth_m4 + 2*pDIC_m4
+DIC_m4
+```
+
+
+#### modelo 5
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M5$LL$ll)
+# estimación theta_bayes
+theta_hat  <- colMeans(cadena1_M5$THETA[,1:m])
+# estimación sig2_bayes
+sigma2_hat <- mean(cadena1_M5$THETA$sig2)
+# log-verosimilitud con parámetros estimacdos
+lpyth_m5   <- sum(dt.scaled(x = y, df = 3, mean = rep(theta_hat, nj), sd = sqrt(sigma2_hat), log = T))
+lpyth_m5
+# oenalización por cantidad de parámetros
+pDIC_m5    <- 2*(lpyth_m5 - mean(LP1))
+pDIC_m5
+# Criterio DIC
+DIC_m5     <- -2*lpyth_m5 + 2*pDIC_m5
+DIC_m5
+```
+
+#### modelo 6
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M6$LL$ll)
+# estimación theta_bayes
+theta_hat  <- colMeans(cadena1_M6$THETA[,1:m])
+# estimación sig2_bayes
+sigma2_hat <- colMeans(cadena1_M6$THETA[,(m+1):(2*m)])
+# log-verosimilitud con parámetros estimacdos
+lpyth_m6   <- sum(dt.scaled(x = y, df = 3, mean = rep(theta_hat, nj), sd = sqrt(rep(sigma2_hat, nj)), log = T))
+lpyth_m6
+# oenalización por cantidad de parámetros
+pDIC_m6    <- 2*(lpyth_m6 - mean(LP1))
+pDIC_m6
+# Criterio DIC
+DIC_m6     <- -2*lpyth_m6 + 2*pDIC_m6
+DIC_m6
+```
+### tabla resumen
+
+```{r}
+# tabla de resumen
+tab <- matrix(c(lpyth_m1, lpyth_m2, lpyth_m3, lpyth_m4, lpyth_m5, lpyth_m6,
+                pDIC_m1,  pDIC_m2,  pDIC_m3,  pDIC_m4,  pDIC_m5,  pDIC_m6,
+                DIC_m1,   DIC_m2,   DIC_m3,   DIC_m4,   DIC_m5,   DIC_m6),nrow = 3, ncol = 6, byrow = T)
+colnames(tab) <- c("M1", "M2", "M3","M4", "M5","M6")
+rownames(tab) <- c("lp","pDIC","DIC")
+knitr::kable(x = tab, digits = 2, align = "c")
+```
+
+## Analisis para Bogotá D.C.
+
+Usando el **modelo 6** obtendremos la información relacionada con **Bogotá** la cual pertenece al $n_3 = 165$ en el vector $n_j$ para $\theta$ y para $\sigma^2$.
+
+```{r}
+# theta
+theta_Bog <- cadena1_M6$THETA$theta3
+#sig2
+sig2_Bog <- cadena1_M6$THETA$sig23
+```
+
+Para poder checar la bondad de ajuste del **modelo 6** para las siguientes estadísticas referentes al dominio de **Bogotá**:
+
+1. Media
+2. Mediana
+3. Desviación estándar
+4. Coefiiente de variación
+5. Rango
+6. Rango intercuartílico
+
+Primero obtendremos los estáditicos observadoes para **Bogotá**, luego simularemos valores de la poblacion dados $\theta_{Bog}, \kappa$ y $\sigma^2_{Bog}$.
+
+### datos observados
+
+analissi previo a **Bogotá**
+
+```{r}
+# filtrar datos
+Bog <- Data %>% 
+      filter(Dominio == "BOGOTA")
+# mirar datos
+par(mfrow = c(1,2), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
+boxplot(Bog$Ingtot)
+plot(x = NA, y = NA, ylab = "Densidad", xlab = "Bog$ingtot", cex.axis = 0.7, xlim = range(Bog$Ingtot),ylim = c(0,0.5))
+hist(Bog$Ingtot, freq = F, add = T, col = "mistyrose", border = "mistyrose")
+lines(density(Bog$Ingtot), col = "red")
+```
+
+```{r}
+# datos almacenados en Estadisticos
+yb_Bog <- as.numeric(Estadisticos[3,3])
+yb_Bog
+n_Bog <- as.numeric(Estadisticos[3,2])
+n_Bog
+# desviación
+des_Bog <- sd(Bog$Ingtot)
+des_Bog
+#mediana
+mediana_Bog <- median(Bog$Ingtot)
+mediana_Bog
+#coeficiente de variación
+cv_Bog <- des_Bog/yb_Bog
+cv_Bog
+# rango bógota
+rango_Bog <- range(Bog$Ingtot)[2] - range(Bog$Ingtot)[1]
+rango_Bog
+# rango intercuartilico
+IQR_Bog <- IQR(Bog$Ingtot)
+IQR_Bog 
+```
+
+### Simulación
+
+Haremos uso de la **Distribución predictiva posterior** para obtener las muestras de los estadisticos que nos permitan obtener el **ppp**
+
+```{r}
+#distribución predictiva posterior
+yb_MCMC      <- NULL
+mediana_MCMC <- NULL
+des_MCMC     <- NULL
+cv_MCMC      <- NULL
+rango_MCMC   <- NULL
+IQR_MCMC     <- NULL
+#Muestreo
+set.seed(1908) #año del artículo  Biometrika
+for (i in 1:10000) {
+      #datos
+      y_pre <- rt.scaled(n = n_Bog, df = 3, mean = theta_Bog[i], sd = sqrt(sig2_Bog[i]))
+      #estadisticas
+      yb_MCMC[i]      <- mean(y_pre)
+      mediana_MCMC[i] <- median(y_pre)
+      des_MCMC[i]     <- sd(y_pre)
+      cv_MCMC[i]      <- sd(y_pre)/mean(y_pre)
+      rango_MCMC[i]   <- range(y_pre)[2] - range(y_pre)[1]
+      IQR_MCMC[i]     <- IQR(y_pre) 
+      }
+```
+
+Con lo anterior podemos encontrar los **PPP** para cada estadístico y presentarlos en un tabla
+
+```{r}
+# tabla de resumen
+tab <- matrix(c(yb_Bog, mediana_Bog, des_Bog, cv_Bog, rango_Bog, IQR_Bog,
+                mean(yb_MCMC), mean(mediana_MCMC), mean(des_MCMC), mean(cv_MCMC),
+                mean(rango_MCMC), mean(IQR_MCMC),
+                mean(yb_MCMC > yb_Bog), mean(mediana_MCMC > mediana_Bog) ,
+                mean(des_MCMC > des_Bog), mean(cv_MCMC > cv_Bog), mean(rango_MCMC > rango_Bog),
+                mean(IQR_MCMC > IQR_Bog)),nrow = 3, ncol = 6, byrow = T)
+colnames(tab) <- c("Media", "Q50%", "SD","CV", "Rango","IQR")
+rownames(tab) <- c("Observado","Estimado","PPP")
+knitr::kable(x = tab, digits = 3, align = "c")
+```
+
+
