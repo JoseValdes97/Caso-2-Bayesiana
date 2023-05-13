@@ -28,7 +28,7 @@ MCMC_1 <- function(y, B) {
             # 2.2 actualizar el valor de sigma^2
             nun   <- nu0 + n
             s2n   <- (nu0*s20 + (n-1)*var_y + n*(mean_y - theta)^2)
-            sig2 <- rgamma(n = 1, shape = nun/2, rate = s2n/2)
+            sig2 <- 1/rgamma(n = 1, shape = nun/2, rate = s2n/2)
             # 2.3 almacenar valores
             THETA[b,] <- c(theta,sig2)
             # log-verosimilitud
