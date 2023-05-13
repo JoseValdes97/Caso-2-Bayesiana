@@ -1,3 +1,4 @@
+# Segundo modelo 2 
 # Segundo modelo 
 MCMC_2 <- function(y, B, nj, yb, s2) {
       # tamaños
@@ -38,9 +39,9 @@ MCMC_2 <- function(y, B, nj, yb, s2) {
       }
       # fin de la cadena
       # salida
+      THETA <- as.data.frame(THETA[-c(1:1000),])
+      LL    <- as.data.frame(LL[-c(1:1000),])
       colnames(THETA) <- c(paste0("theta",1:m), "sig2", "mu", "tau2")
       colnames(LL) <- c("ll")
-      THETA <- as.data.frame(THETA)
-      LL    <- as.data.frame(LL)
       return(list(THETA = THETA, LL = LL))
 }

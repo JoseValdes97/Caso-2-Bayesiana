@@ -16,8 +16,8 @@ MCMC_3 <- function(y,B, nj, yb, s2) {
       sig2  <- s2  # sigma_j^2
       mu    <- mean(theta)
       tau2  <- var(theta)
-      # iniciar sigma random round(rgamma(1,shape=al0/2,rate=be0/2),3)
-      ups2  <- 1.33  # sigma^2
+      set.seed(0511)
+      ups2  <- rgamma(n=1,shape = al0/2, rate = be0/2)  # sigma^2
       # almacenamiento
       THETA <- matrix(data = NA, nrow = B, ncol = 2*m+4)
       LL    <- matrix(data = NA, nrow = B, ncol = 1)
@@ -35,7 +35,7 @@ MCMC_3 <- function(y,B, nj, yb, s2) {
             # actualizar tau2
             tau2 <- 1/rgamma(n = 1, shape = 0.5*(eta0+m), rate = 0.5*(eta0*t20 + (m-1)*var(theta) + m*(mean(theta) - mu)^2))
             # actualizar sigma^2
-            ups2 <- rgamma(n = 1, shape = al0 + 0.5*m*nu, rate = be0 + 0.5*nu*sum(1/sig2))
+            ups2 <- rgamma(n = 1, shape = al0 + (0.5*m*nu), rate = be0 + (0.5*nu)*sum(1/sig2))
             # almacenar
             THETA[b,] <- c(theta, sig2, mu, tau2, nu, ups2)
             # log-verosimilitud
@@ -43,9 +43,9 @@ MCMC_3 <- function(y,B, nj, yb, s2) {
       }
       # fin de la cadena
       # salida
+      THETA <- as.data.frame(THETA[-c(1:1000),])
+      LL    <- as.data.frame(LL[-c(1:1000)])
       colnames(THETA) <- c(paste0("theta", 1:m), paste0("sig2", 1:m), "mu", "tau2", "nu", "ups2")
       colnames(LL) <- c("ll")
-      THETA <- as.data.frame(THETA)
-      LL    <- as.data.frame(LL)
       return(list(THETA = THETA, LL = LL))
 }

@@ -7,7 +7,20 @@ output: html_document
 
 ```{r setup, include=FALSE}
 suppressMessages(suppressWarnings(library(dplyr)))
+suppressMessages(suppressWarnings(library(metRology)))
 knitr::opts_chunk$set(echo = TRUE)
+#modelo 1
+source("modelo_1.R")
+#modelo 2
+source("modelo_2.R")
+#modelo 3
+source("modelo_3.R")
+#modelo 4
+source("modelo_4.R")
+#modelo 5
+source("modelo_5.R")
+#modelo 6
+source("modelo_6.R")
 ```
 
 # Caso 2 de bayesiana
@@ -20,12 +33,12 @@ load("Personas.Rdata")
 # mira Na en ingtot
 sum(is.na(dat$ingtot))
 ```
-Teniendo en cuenta lo anterior extraeremos de la base de datos las variables
+Teniendo encuenta lo anterior extraeremos de la base de datos las varibles
 para el caso las cuales son **dominio** y **ingtot**. Organizamos los datos
-teniendo en cuenta que:  
+teniendo encuenta que:  
 
- 1. Recordamos que la funci髇 log tiene base $e$.  
- 2. La variable **dominio** es un factor 
+ 1. Recordamos que la funci贸n log tiene base $e$.  
+ 2. La varaible **dominio** es un factor 
 
 ```{r}
 #datos que voy a usar
@@ -44,10 +57,12 @@ var(Data$Ingtot)
 class(Data$Dominio)
 Data[,1] <- as.factor(Data$Dominio)
 summary(Data$Dominio)
+#boxplot
+boxplot(Data$Ingtot)
 ```
 
 Ahora con esto obtendremos los datos que nos son relevantes para eltrabajo  
-desde la base de datos como:
+desde la base de datos c贸mo:
 
 ```{r}
 # m <- Cantidad de dominios (Departamentos)
@@ -61,9 +76,9 @@ y <- Data$Ingtot
 head(y)
 ```
 
-Obtendremos una tabla con los estad韘ticos necesarios por dominio para trabajar con las distribuciones condicionales completas y tener una idea de los datos.
+Obtendremos una tabla con los estad铆sticos necesarios por dominio para trabajar con las distribuciones condicionales completas y tener una idea de los datos.
 
- 1. la funci髇 **n()** solo funciona dentro de una funci髇 actual como summarise     en el estado actual y devuelve el tama駉 del grupo
+ 1. la funci贸n **n()** solo funciona dentro de una funcion actual como summarise     en el estado actual y devuelve el tama帽o del grupo
 
 ```{r}
 # tabla con los estadisticos
@@ -80,10 +95,11 @@ s2 <- Estadisticos$s2
 
 ## Modelo 1
 
-Hipepar醡etros del modelo.
-$\textsf{M}_2$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\nu = 1$ y $\sigma^2_0=1.182$.
+Hiperpar谩metros del modelo.
 
-Ejecuci髇 del modelo
+$\textsf{M}_1$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\nu_0 = 1$, $\sigma^2_0 = 1.182$.
+
+Ejecuci贸n del modelo
 
 ```{r}
 #ajustar modelo
@@ -92,59 +108,55 @@ set.seed(1856)
 cadena1_M1 <- MCMC_1(y,B = 11000)
 tictoc::toc()
 ```
-
 ### Convergencia
 
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# cadenas
-col <- RColorBrewer::brewer.pal(9,"Set1")[1:9]
-yrange <- range(cadena1_M1$LL$ll)
 # Gr谩fico
-plot(cadena1_M1$LL$ll, type = "p", pch = ".", cex = 1.1, col = col[2], ylim = yrange, xlab = "Iteraci髇", ylab = "Log-verosimilitud", main = "Modelo 1")
+yrange <- range(cadena1_M1$LL$ll)
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
 
 ## Modelo 2
 
-Hipepar醡etros del modelo.
-$\textsf{M}_2$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\nu = 1$ y $\sigma^2_0=1.182$.
+Hiperpar谩metros del modelo.
 
-Ejecuci髇 del modelo
+$\textsf{M}_2$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\nu_0 = 1$, $\sigma^2_0 = 1.182$.
+
+Ejecuci贸n del modelo
 
 ```{r}
 #ajustar modelo
 tictoc::tic()
 set.seed(1856)
-cadena1_M2 <- MCMC_2(y,B = 11000, nj, yb, s2)
+cadena1_M2 <- MCMC_2(y, B = 11000, nj, yb, s2)
 tictoc::toc()
 ```
-
 ### Convergencia
 
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# cadenas
-col <- RColorBrewer::brewer.pal(9,"Set1")[1:9]
-yrange <- range(cadena1_M2$LL$ll)
 # Gr谩fico
-plot(cadena1_M2$LL$ll[1001:length(cadena1_M2$LL$ll)], type = "p", pch = ".", cex = 1.1, col = col[2], ylim = yrange, xlab = "Iteraci髇", ylab = "Log-verosimilitud", main = "Modelo 2")
+yrange <- range(cadena1_M2$LL$ll)
+plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
+
 
 ## Modelo 3
 
-Hiperpar醡etros del modelo.
+Hiperpar谩metros del modelo.
 
 $\textsf{M}_3$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\nu = 1$, $\alpha_0 = 1$, $\beta_0 = 0.846$.
 
-Ejecuci髇 del modelo
+Ejecuci贸n del modelo
 
 ```{r}
 #ajustar modelo
 tictoc::tic()
 set.seed(1856)
-cadena1_M3 <- MCMC_3(y, B = 11000, nj, yb, s2)
+cadena1_M3 <- MCMC_3(y,B = 11000, nj, yb, s2)
 tictoc::toc()
 ```
 ### Convergencia
@@ -152,30 +164,550 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# cadenas
-col <- RColorBrewer::brewer.pal(9,"Set1")[1:9]
-yrange <- range(cadena1_M3$LL$ll)
 # Gr谩fico
-plot(cadena1_M3$LL$ll, type = "p", pch = ".", cex = 1.1, col = col[2], ylim = yrange, xlab = "Iteraci髇", ylab = "Log-verosimilitud", main = "Modelo 3")
+yrange <- range(cadena1_M3$LL$ll)
+plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelo 3")
 ```
-## Modelo 6
+
+## Modelo 4
+
+Hiperpar谩metros del modelo.
+
+$\textsf{M}_4$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\alpha_0 = 1$, $\beta_0 = 0.846$, $\kappa = 3$.
+
+Ejecuci贸n del modelo
 
 ```{r}
 #ajustar modelo
 tictoc::tic()
 set.seed(1856)
-cadena1_M6 <- MCMC_6(y, B = 11000, nj, yb, s2)
+cadena1_M4 <- MCMC_4(y,B = 11000, nj)
+tictoc::toc()
+```
+### Convergencia
+
+Usaremos la log-verosimilitud para mirar la convergencia de la cadena
+
+```{r}
+# Gr谩fico
+yrange <- range(cadena1_M4$LL$ll)
+plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelo 4")
+```
+
+## Modelo 5
+
+Hiperpar谩metros del modelo.
+ 
+$\textsf{M}_5$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\alpha_0 = 1$, $\beta_0 = 0.846$, $\kappa = 3$.
+
+Ejecuci贸n del modelo
+
+```{r}
+#ajustar modelo
+tictoc::tic()
+set.seed(1856)
+cadena1_M5 <- MCMC_5(y,B = 11000, nj, yb)
 tictoc::toc()
 ```
 
+### Convergencia
+
+Usaremos la log-verosimilitud para mirar la convergencia de la cadena
+
 ```{r}
-# cadenas
-col <- RColorBrewer::brewer.pal(9,"Set1")[1:9]
-yrange <- range(cadena1_M6$LL$ll)
 # Gr谩fico
-plot(cadena1_M6$LL$ll, type = "p", pch = ".", cex = 1.1, col = col[2], ylim = yrange, xlab = "Iteraci髇", ylab = "Log-verosimilitud", main = "Modelo 6")
+yrange <- range(cadena1_M5$LL$ll)
+plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelo 5")
 ```
 
+## Modelo 6
+
+Hiperpar谩metros del modelo.
+ 
+$\textsf{M}_6$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\alpha = 1$, $a_\beta = 1$, $b_\beta =  1.182$, $\kappa = 3$.
+
+Ejecuci贸n del modelo
+
+```{r}
+#ajustar modelo
+tictoc::tic()
+set.seed(1856)
+cadena1_M6 <- MCMC_6(y,B = 11000, nj, yb)
+tictoc::toc()
+```
+
+
+### Convergencia
+
+Usaremos la log-verosimilitud para mirar la convergencia de la cadena
+
+```{r}
+# Gr谩fico
+yrange <- range(cadena1_M6$LL$ll)
+plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelo 6")
+```
+
+
+### modelos en un solo plot
+
+```{r}
+# Gr谩fico
+par(mfrow = c(1,1), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
+#modelos normal
+yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll,cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelos")
+lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
+lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
+#modelos t
+#yrange <- range(cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
+#plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "Iteraci贸n",ylab = "Log-verosimilitud", main = "Modelos t")
+lines(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.5,col = "gold")
+lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
+lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
+```
+
+
+```{r}
+# Gr谩fico
+par(mfrow = c(1,2), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
+#modelos normal
+yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll)
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelos")
+lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
+lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
+#modelos t
+yrange <- range(cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
+plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "Iteraci髇",ylab = "Log-verosimilitud", main = "Modelos t")
+#lines(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.5,col = "gold")
+lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
+lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
+```
+
+## Comparaci贸n de modelos
+
+primero hacremos un analsis de los modelos para su densidad
+
+```{r}
+#gr谩fico fondo
+plot(x = NA, y = NA, ylab = "Densidad", xlab = "Log-verosimilitud", cex.axis = 0.7, xlim = range(as.numeric(cadena1_M5$LL$ll), as.numeric(cadena1_M6$LL$ll),as.numeric(cadena1_M2$LL$ll),as.numeric(cadena1_M3$LL$ll)), ylim = c(0,0.12))
+# modelo dos
+hist(as.numeric(cadena1_M2$LL$ll), freq = F, add = T, col = "lightblue", border = "lightblue")
+lines(density(as.numeric(cadena1_M2$LL$ll)), col = "blue")
+# modelos tres
+hist(as.numeric(cadena1_M3$LL$ll), freq = F, add = T, col = "burlywood", border = "burlywood")
+lines(density(as.numeric(cadena1_M3$LL$ll)), col = "brown")
+# modelos cinco
+hist(as.numeric(cadena1_M5$LL$ll), freq = F, add = T, col = "mistyrose", border = "mistyrose")
+lines(density(as.numeric(cadena1_M5$LL$ll)), col = "magenta")
+# modelos seis
+hist(as.numeric(cadena1_M6$LL$ll), freq = F, add = T, col = "lightgreen", border = "lightgreen")
+lines(density(as.numeric(cadena1_M6$LL$ll)), col = "green")
+# cuadro legendario
+legend("top", legend = c("Modelo 2","Modelo 3","Modelo 5","Modelo 6"), fill = c("lightblue", "burlywood", "mistyrose", "lightgreen"), border = c("blue", "brown", "magenta", "green"), bty = "n")
+```
+
+Notamos que los modelos t tienen una **log-verosimilitud** m谩s grande que los modelos **normales**, tambi茅n se puede ver que destaca el modelo **modelo 6** por encima de los demas con el valor m谩s alto de **log-vegosimilitud promedio**
+
+### Compraci贸n modelos
+
+Usaremos el DIC para cada uno de los modelos
+
+#### modelo 1
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M1$LL$ll)
+# estimaci贸n theta_bayes
+theta_hat  <- mean(cadena1_M1$THETA$theta)
+# estimaci贸n sig2_bayes
+sigma2_hat <- mean(cadena1_M1$THETA$sig2)
+# log-verosimilitud con par谩metros estimacdos
+lpyth_m1   <- sum(dnorm(x = y, mean = theta_hat, sd = sqrt(sigma2_hat), log = T))
+lpyth_m1
+# oenalizaci贸n por cantidad de par谩metros
+pDIC_m1    <- 2*(lpyth_m1 - mean(LP1))
+pDIC_m1
+# Criterio DIC
+DIC_m1     <- -2*lpyth_m1 + 2*pDIC_m1
+DIC_m1
+```
+
+#### modelo 2
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M2$LL$ll)
+# estimaci贸n theta_bayes
+theta_hat  <- colMeans(cadena1_M2$THETA[,1:m])
+# estimaci贸n sig2_bayes
+sigma2_hat <- mean(cadena1_M2$THETA$sig2)
+# log-verosimilitud con par谩metros estimacdos
+lpyth_m2   <- sum(dnorm(x = y, mean = rep(theta_hat,nj), sd = sqrt(sigma2_hat), log = T))
+lpyth_m2
+# oenalizaci贸n por cantidad de par谩metros
+pDIC_m2    <- 2*(lpyth_m2 - mean(LP1))
+pDIC_m2
+# Criterio DIC
+DIC_m2     <- -2*lpyth_m2 + 2*pDIC_m2
+DIC_m2
+```
+
+#### modelo 3
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M3$LL$ll)
+# estimaci贸n theta_bayes
+theta_hat  <- colMeans(cadena1_M3$THETA[,1:m])
+# estimaci贸n sig2_bayes
+sigma2_hat <- colMeans(cadena1_M3$THETA[,(m+1):(2*m)])
+# log-verosimilitud con par谩metros estimacdos
+lpyth_m3   <- sum(dnorm(x = y, mean = rep(theta_hat,nj), sd = sqrt(rep(sigma2_hat, nj)), log = T))
+lpyth_m3
+# oenalizaci贸n por cantidad de par谩metros
+pDIC_m3    <- 2*(lpyth_m3 - mean(LP1))
+pDIC_m3
+# Criterio DIC
+DIC_m3     <- -2*lpyth_m3 + 2*pDIC_m3
+DIC_m3
+```
+
+#### modelo 4
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M4$LL$ll)
+# estimaci贸n theta_bayes
+theta_hat  <- mean(cadena1_M4$THETA$theta)
+# estimaci贸n sig2_bayes
+sigma2_hat <- mean(cadena1_M4$THETA$sig2)
+# log-verosimilitud con par谩metros estimacdos
+lpyth_m4   <- sum(dt.scaled(x = y, df = 3, mean = theta_hat, sd = sqrt(sigma2_hat), log = T))
+lpyth_m4
+# oenalizaci贸n por cantidad de par谩metros
+pDIC_m4    <- 2*(lpyth_m4 - mean(LP1))
+pDIC_m4
+# Criterio DIC
+DIC_m4     <- -2*lpyth_m4 + 2*pDIC_m4
+DIC_m4
+```
+
+
+#### modelo 5
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M5$LL$ll)
+# estimaci贸n theta_bayes
+theta_hat  <- colMeans(cadena1_M5$THETA[,1:m])
+# estimaci贸n sig2_bayes
+sigma2_hat <- mean(cadena1_M5$THETA$sig2)
+# log-verosimilitud con par谩metros estimacdos
+lpyth_m5   <- sum(dt.scaled(x = y, df = 3, mean = rep(theta_hat, nj), sd = sqrt(sigma2_hat), log = T))
+lpyth_m5
+# oenalizaci贸n por cantidad de par谩metros
+pDIC_m5    <- 2*(lpyth_m5 - mean(LP1))
+pDIC_m5
+# Criterio DIC
+DIC_m5     <- -2*lpyth_m5 + 2*pDIC_m5
+DIC_m5
+```
+
+#### modelo 6
+
+```{r}
+# log-verosimilitud
+LP1 <- as.numeric(cadena1_M6$LL$ll)
+# estimaci贸n theta_bayes
+theta_hat  <- colMeans(cadena1_M6$THETA[,1:m])
+# estimaci贸n sig2_bayes
+sigma2_hat <- colMeans(cadena1_M6$THETA[,(m+1):(2*m)])
+# log-verosimilitud con par谩metros estimacdos
+lpyth_m6   <- sum(dt.scaled(x = y, df = 3, mean = rep(theta_hat, nj), sd = sqrt(rep(sigma2_hat, nj)), log = T))
+lpyth_m6
+# oenalizaci贸n por cantidad de par谩metros
+pDIC_m6    <- 2*(lpyth_m6 - mean(LP1))
+pDIC_m6
+# Criterio DIC
+DIC_m6     <- -2*lpyth_m6 + 2*pDIC_m6
+DIC_m6
+```
+### tabla resumen
+
+```{r}
+# tabla de resumen
+tab <- matrix(c(lpyth_m1, lpyth_m2, lpyth_m3, lpyth_m4, lpyth_m5, lpyth_m6,
+                pDIC_m1,  pDIC_m2,  pDIC_m3,  pDIC_m4,  pDIC_m5,  pDIC_m6,
+                DIC_m1,   DIC_m2,   DIC_m3,   DIC_m4,   DIC_m5,   DIC_m6),nrow = 3, ncol = 6, byrow = T)
+colnames(tab) <- c("M1", "M2", "M3","M4", "M5","M6")
+rownames(tab) <- c("lp","pDIC","DIC")
+knitr::kable(x = tab, digits = 2, align = "c")
+```
+
+## Analisis para Bogot谩 D.C.
+
+Usando el **modelo 6** obtendremos la informaci贸n relacionada con **Bogot谩** la cual pertenece al $n_3 = 165$ en el vector $n_j$ para $\theta$ y para $\sigma^2$.
+
+```{r}
+# theta
+theta_Bog <- cadena1_M6$THETA$theta3
+#sig2
+sig2_Bog <- cadena1_M6$THETA$sig23
+```
+
+Para poder checar la bondad de ajuste del **modelo 6** para las siguientes estad铆sticas referentes al dominio de **Bogot谩**:
+
+1. Media
+2. Mediana
+3. Desviaci贸n est谩ndar
+4. Coefiiente de variaci贸n
+5. Rango
+6. Rango intercuart铆lico
+
+Primero obtendremos los est谩diticos observadoes para **Bogot谩**, luego simularemos valores de la poblacion dados $\theta_{Bog}, \kappa$ y $\sigma^2_{Bog}$.
+
+### datos observados
+
+analissi previo a **Bogot谩**
+
+```{r}
+# filtrar datos
+Bog <- Data %>% 
+      filter(Dominio == "BOGOTA")
+# mirar datos
+par(mfrow = c(1,2), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
+boxplot(Bog$Ingtot)
+plot(x = NA, y = NA, ylab = "Densidad", xlab = "Bog$ingtot", cex.axis = 0.7, xlim = range(Bog$Ingtot),ylim = c(0,0.5))
+hist(Bog$Ingtot, freq = F, add = T, col = "mistyrose", border = "mistyrose")
+lines(density(Bog$Ingtot), col = "red")
+```
+
+```{r}
+# datos almacenados en Estadisticos
+yb_Bog <- as.numeric(Estadisticos[3,3])
+yb_Bog
+n_Bog <- as.numeric(Estadisticos[3,2])
+n_Bog
+# desviaci贸n
+des_Bog <- sd(Bog$Ingtot)
+des_Bog
+#mediana
+mediana_Bog <- median(Bog$Ingtot)
+mediana_Bog
+#coeficiente de variaci贸n
+cv_Bog <- des_Bog/yb_Bog
+cv_Bog
+# rango b贸gota
+rango_Bog <- range(Bog$Ingtot)[2] - range(Bog$Ingtot)[1]
+rango_Bog
+# rango intercuartilico
+IQR_Bog <- IQR(Bog$Ingtot)
+IQR_Bog 
+```
+
+### Simulaci贸n
+
+Haremos uso de la **Distribuci贸n predictiva posterior** para obtener las muestras de los estadisticos que nos permitan obtener el **ppp**
+
+```{r}
+#distribuci贸n predictiva posterior
+yb_MCMC      <- NULL
+mediana_MCMC <- NULL
+des_MCMC     <- NULL
+cv_MCMC      <- NULL
+rango_MCMC   <- NULL
+IQR_MCMC     <- NULL
+#Muestreo
+set.seed(1908) #a帽o del art铆culo  Biometrika
+for (i in 1:10000) {
+      #datos
+      y_pre <- rt.scaled(n = n_Bog, df = 3, mean = theta_Bog[i], sd = sqrt(sig2_Bog[i]))
+      #estadisticas
+      yb_MCMC[i]      <- mean(y_pre)
+      mediana_MCMC[i] <- median(y_pre)
+      des_MCMC[i]     <- sd(y_pre)
+      cv_MCMC[i]      <- sd(y_pre)/mean(y_pre)
+      rango_MCMC[i]   <- range(y_pre)[2] - range(y_pre)[1]
+      IQR_MCMC[i]     <- IQR(y_pre) 
+      }
+```
+
+Con lo anterior podemos encontrar los **PPP** para cada estad铆stico y presentarlos en un tabla
+
+```{r}
+# tabla de resumen
+tab <- matrix(c(yb_Bog, mediana_Bog, des_Bog, cv_Bog, rango_Bog, IQR_Bog,
+                mean(yb_MCMC), mean(mediana_MCMC), mean(des_MCMC), mean(cv_MCMC),
+                mean(rango_MCMC), mean(IQR_MCMC),
+                mean(yb_MCMC > yb_Bog), mean(mediana_MCMC > mediana_Bog) ,
+                mean(des_MCMC > des_Bog), mean(cv_MCMC > cv_Bog), mean(rango_MCMC > rango_Bog),
+                mean(IQR_MCMC > IQR_Bog)),nrow = 3, ncol = 6, byrow = T)
+colnames(tab) <- c("Media", "Q50%", "SD","CV", "Rango","IQR")
+rownames(tab) <- c("Observado","Estimado","PPP")
+knitr::kable(x = tab, digits = 3, align = "c")
+```
+
+## Ranking bayesiano
+
+Usaremos el **modelo 6** para realizar un ranking bayesiano basado en las estimaciones puntuales y los intervalos de credibilidad dados para cada promedio por dominio teniendo en cuenta lo siguiente:
+
+1. Hacer la visualizaci贸n en escala logar铆tmica. 
+2. Rojo oscuro para efectos promedio significativamente inferiores a 13.830
+3. Negro para efectos promedio que no difieren significativamente de 13.830 
+4. Verde oscuro para efectos promedio significativamente superiores a 13.830 
+5. Observe que 13.830 corresponde a un SMLMV de 2022 en escala logar铆tmica.
+
+```{r}
+#ranking
+THETA    <- cadena1_M6$THETA
+Dominios <- Estadisticos$Dominio
+#Estimaciones puntuales
+that     <- colMeans(THETA[,1:m])
+# Int. credibilidad al 95%
+IC95    <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
+# ordernar el ranking (menor a mayor)
+orden    <- order(that)
+Dominios <- Dominios[orden]
+that     <- that[orden]
+IC95     <- IC95[,orden]
+# Colores
+colo <- rep(2,m)
+colo[which(IC95[1,]>13.830)] <- 1
+colo[which(IC95[2,]<13.830)] <- 3
+colo <- c("green3","black","red3")[colo]
+#Gr谩fico
+par(mfrow = c(1,1), mar = c(4,10,1.5,1), mgp = c(2.5,0.75,0))
+plot(NA, NA, xlab = "Ingreso total", ylab = "", main = "Ranking Bayesisano: Modelo 6", xlim = c(12.8,14.3), ylim = c(1,m), cex.axis = 0.75, yaxt = "n")
+axis(side = 2, at = 1:m, labels = Dominios, las = 2)
+abline(v = 13.830,  col = "gray", lwd = 3)
+abline(h = 1:m, col = "lightgray", lwd = 1)
+# intervalo y estimaci贸n puntual
+for (j in 1:m) {
+  segments(x0 = IC95[1,j], y0 = j, x1 = IC95[2,j], y1 = j, col = colo[j])
+  lines(x = that[j], y = j, type = "p", pch = 16, cex = 0.8, col = colo[j])
+}
+
+```
+
+## Estimaciones para el top 5 del ranking
+
+Usando el **modelo 6** y de acuerdo con el ranking anterior el top 5 son los  siguietnes domingos **dominios**:
+
+1. Medellin
+2. Manizales
+3. Tunja
+4. Bogota
+5. Bucaramanga
+
+Usaremos la **Distribuci贸n predictiva posterior** para poder estimar puntualmente  la media, la desviaci贸n estandar y el coeficiente de variaci贸n de ada dominio.
+
+```{r}
+# informacion del top 5
+THETA_top5 <- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
+n_top5 <- nj[c(11, 10, 23, 3, 4)]
+# Simulacion para estimar
+#distribuci贸n predictiva posterior
+yb_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
+des_MCMC     <- matrix(data = NA, nrow=10000, ncol = 5)
+cv_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
+#Muestreo
+set.seed(1908) #a帽o del art铆culo  Biometrika
+for (i in 1:10000) {
+      #datos
+      y_pre_Me <- rt.scaled(n = n_top5[1], df = 3, mean = THETA_top5[i,1], sd = sqrt(THETA_top5[i,6]))
+      y_pre_Ma <- rt.scaled(n = n_top5[2], df = 3, mean = THETA_top5[i,2], sd = sqrt(THETA_top5[i,7]))
+      y_pre_Tu <- rt.scaled(n = n_top5[3], df = 3, mean = THETA_top5[i,3], sd = sqrt(THETA_top5[i,8]))
+      y_pre_Bo <- rt.scaled(n = n_top5[4], df = 3, mean = THETA_top5[i,4], sd = sqrt(THETA_top5[i,9]))
+      y_pre_Bu <- rt.scaled(n = n_top5[5], df = 3, mean = THETA_top5[i,5], sd = sqrt(THETA_top5[i,10]))
+      #estadisticas Medellin
+      yb_MCMC[i,1]  <- mean(y_pre_Me)
+      des_MCMC[i,1] <- sd(y_pre_Me)
+      cv_MCMC[i,1]  <- sd(y_pre_Me)/mean(y_pre_Me) * 100
+      #estadisticas Manizales
+      yb_MCMC[i,2]  <- mean(y_pre_Ma)
+      des_MCMC[i,2] <- sd(y_pre_Ma)
+      cv_MCMC[i,2]  <- sd(y_pre_Ma)/mean(y_pre_Ma) * 100
+      #estadisticas Tunja
+      yb_MCMC[i,3]  <- mean(y_pre_Tu)
+      des_MCMC[i,3] <- sd(y_pre_Tu)
+      cv_MCMC[i,3]  <- sd(y_pre_Tu)/mean(y_pre_Tu) * 100
+      #estadisticas Bogot谩
+      yb_MCMC[i,4]  <- mean(y_pre_Bo)
+      des_MCMC[i,4] <- sd(y_pre_Bo)
+      cv_MCMC[i,4]  <- sd(y_pre_Bo)/mean(y_pre_Bo) * 100
+      #estadisticas Bucaramanga
+      yb_MCMC[i,5]  <- mean(y_pre_Bu)
+      des_MCMC[i,5] <- sd(y_pre_Bu)
+      cv_MCMC[i,5]  <- sd(y_pre_Bu)/mean(y_pre_Bu) * 100
+}
+# tabla de resumen
+tab <- matrix(c(mean(yb_MCMC[,1]), mean(yb_MCMC[,2]), mean(yb_MCMC[,3]), mean(yb_MCMC[,4]), mean(yb_MCMC[,5]),
+                mean(des_MCMC[,1]), mean(des_MCMC[,2]), mean(des_MCMC[,3]), mean(des_MCMC[,4]), mean(des_MCMC[,5]),
+                mean(cv_MCMC[,1]), mean(cv_MCMC[,2]), mean(cv_MCMC[,3]), mean(cv_MCMC[,4]), mean(cv_MCMC[,5])),
+              nrow = 3, ncol = 5, byrow = T)
+#tab[1,] <- exp(tab[1,])
+#tab[2,] <- exp(tab[2,])
+colnames(tab) <- c("Med.", "Man.", "Tun.","Bog.", "Buca.")
+rownames(tab) <- c("Media","Des. Esta.","CV %")
+knitr::kable(x = tab, digits = 3, align = "c")
+```
+
+
+Ahora procederemos a obtener la segmentaci髇 jer醨quica en 4 grupos.
+
+```{r}
+#install.packages("dendextend")
+#install.packages("data.table")
+library(dendextend)
+library(data.table)
+library(factoextra)
+library(cluster)
+library(grid)
+library(datawizard)
+
+theta  <- cadena1_M6$THETA[c(1:25)]
+sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
+theta_est  <- colMeans(theta)
+sigma2_est <- colMeans(sigma2)
+arreglo <- data.frame(theta_est=normalize(theta_est),
+                      sigma2_est=normalize(sigma2_est))
+rownames(arreglo) <- unique(Data$Dominio)
+
+
+# Paso 1: Calcular la matriz de distancias entre los dominios
+dist_matrix <- get_dist(arreglo, method = "euclidian", stand = T)
+                        
+# Paso 2: Realizar la agrupaci髇 jer醨quica
+set.seed(2013)
+hclust_result <- hclust(dist_matrix, method = "average")
+# Paso 3: Obtener la segmentaci髇 en cuatro grupos
+groups <- cutree(hclust_result, k = 4)
+
+# Paso 4: Mostrar los resultados
+results <- data.frame(Grupo = as.factor(groups), arreglo)
+# Paso 5: Ordenar los grupos y los colores seg鷑 el orden de las ramas
+order <- order.dendrogram(as.dendrogram(hclust_result))
+groups <- groups[order]
+colores <- c("red", "blue", "green", "darkorange")
+colores_grupo <- colores[groups]
+
+# Paso 6: Graficar el dendrograma con los nombres de las hojas
+plot(hclust_result, main = "Dendrograma de Segmentaci髇", cex= 0.45,
+     xlab= "Distancias entre individuos", ylab="Pesos",check = T,ann = T, hang = -1)
+rect.hclust(hclust_result, k = 4, border = unique(colores_grupo))
+# Paso 7: Ajustar la leyenda
+legend("topright", legend = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"),
+       col = colores, lty = 1, lwd = 2)
+
+# fviz_cluster(list(data = arreglo, cluster = groups))
+clases_aj <- cutree(hclust_result, k = 4)
+results$Grupo <- clases_aj
+results$Etiqueta <- rownames(results)
+ggplot() + geom_text(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), data = results, size = 2) +
+      scale_colour_gradientn(colours= colores) +
+      ggtitle('Clusters de Datos con k = 4 / Agrupamiento Jer醨quico') + 
+      xlab(expression(hat(theta))) + ylab(expression(hat(sigma)^2)) 
+```
 
 
 
