@@ -7,8 +7,8 @@ library(cluster)
 library(grid)
 library(datawizard)
 
-theta  <- cadena1_M6$THETA[c(1:25)]
-sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
+theta  <- exp(cadena1_M6$THETA[c(1:25)])
+sigma2 <- exp(sqrt(3*cadena1_M6$THETA[c(26:50)]))
 theta_est  <- colMeans(theta)
 sigma2_est <- colMeans(sigma2)
 arreglo <- data.frame(theta_est=normalize(theta_est),

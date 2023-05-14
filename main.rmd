@@ -37,7 +37,7 @@ Teniendo encuenta lo anterior extraeremos de la base de datos las varibles
 para el caso las cuales son **dominio** y **ingtot**. Organizamos los datos
 teniendo encuenta que:  
 
- 1. Recordamos que la funciÃ³n log tiene base $e$.  
+ 1. Recordamos que la función log tiene base $e$.  
  2. La varaible **dominio** es un factor 
 
 ```{r}
@@ -49,7 +49,7 @@ names(Data) <- c("Dominio","Ingtot")
 Data[,2] <- log(Data$Ingtot)
 # presentar datos
 head(Data)
-# comprobar media,varianza  y precisiÃ³n
+# comprobar media,varianza  y precisión
 mean(Data$Ingtot)
 var(Data$Ingtot)
 1/var(Data$Ingtot)
@@ -62,13 +62,13 @@ boxplot(Data$Ingtot)
 ```
 
 Ahora con esto obtendremos los datos que nos son relevantes para eltrabajo  
-desde la base de datos cÃ³mo:
+desde la base de datos cómo:
 
 ```{r}
 # m <- Cantidad de dominios (Departamentos)
 m <- length(table(Data$Dominio))
 m
-# n <- nÃºmero de individuos
+# n <- número de individuos
 n <- sum(table(Data$Dominio))
 n
 # y <- vector con los datos
@@ -76,9 +76,9 @@ y <- Data$Ingtot
 head(y)
 ```
 
-Obtendremos una tabla con los estadÃ­sticos necesarios por dominio para trabajar con las distribuciones condicionales completas y tener una idea de los datos.
+Obtendremos una tabla con los estadísticos necesarios por dominio para trabajar con las distribuciones condicionales completas y tener una idea de los datos.
 
- 1. la funciÃ³n **n()** solo funciona dentro de una funcion actual como summarise     en el estado actual y devuelve el tamaÃ±o del grupo
+ 1. la función **n()** solo funciona dentro de una funcion actual como summarise     en el estado actual y devuelve el tamaño del grupo
 
 ```{r}
 # tabla con los estadisticos
@@ -95,11 +95,11 @@ s2 <- Estadisticos$s2
 
 ## Modelo 1
 
-HiperparÃ¡metros del modelo.
+Hiperparámetros del modelo.
 
 $\textsf{M}_1$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\nu_0 = 1$, $\sigma^2_0 = 1.182$.
 
-EjecuciÃ³n del modelo
+Ejecución del modelo
 
 ```{r}
 #ajustar modelo
@@ -113,18 +113,18 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 yrange <- range(cadena1_M1$LL$ll)
 plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
 
 ## Modelo 2
 
-HiperparÃ¡metros del modelo.
+Hiperparámetros del modelo.
 
 $\textsf{M}_2$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\nu_0 = 1$, $\sigma^2_0 = 1.182$.
 
-EjecuciÃ³n del modelo
+Ejecución del modelo
 
 ```{r}
 #ajustar modelo
@@ -138,7 +138,7 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 yrange <- range(cadena1_M2$LL$ll)
 plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
@@ -146,11 +146,11 @@ plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yra
 
 ## Modelo 3
 
-HiperparÃ¡metros del modelo.
+Hiperparámetros del modelo.
 
 $\textsf{M}_3$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\nu = 1$, $\alpha_0 = 1$, $\beta_0 = 0.846$.
 
-EjecuciÃ³n del modelo
+Ejecución del modelo
 
 ```{r}
 #ajustar modelo
@@ -164,18 +164,18 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 yrange <- range(cadena1_M3$LL$ll)
 plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 3")
 ```
 
 ## Modelo 4
 
-HiperparÃ¡metros del modelo.
+Hiperparámetros del modelo.
 
 $\textsf{M}_4$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\alpha_0 = 1$, $\beta_0 = 0.846$, $\kappa = 3$.
 
-EjecuciÃ³n del modelo
+Ejecución del modelo
 
 ```{r}
 #ajustar modelo
@@ -189,18 +189,18 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 yrange <- range(cadena1_M4$LL$ll)
 plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
 
 ## Modelo 5
 
-HiperparÃ¡metros del modelo.
+Hiperparámetros del modelo.
  
 $\textsf{M}_5$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\alpha_0 = 1$, $\beta_0 = 0.846$, $\kappa = 3$.
 
-EjecuciÃ³n del modelo
+Ejecución del modelo
 
 ```{r}
 #ajustar modelo
@@ -215,18 +215,18 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 yrange <- range(cadena1_M5$LL$ll)
 plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 5")
 ```
 
 ## Modelo 6
 
-HiperparÃ¡metros del modelo.
+Hiperparámetros del modelo.
  
 $\textsf{M}_6$: $\mu_0 = 13.495$, $\gamma_0^2 = 11.382$, $\eta_0 = 1$, $\tau^2_0 = 1.182$, $\alpha = 1$, $a_\beta = 1$, $b_\beta =  1.182$, $\kappa = 3$.
 
-EjecuciÃ³n del modelo
+Ejecución del modelo
 
 ```{r}
 #ajustar modelo
@@ -242,7 +242,7 @@ tictoc::toc()
 Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 yrange <- range(cadena1_M6$LL$ll)
 plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 6")
 ```
@@ -251,7 +251,7 @@ plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim 
 ### modelos en un solo plot
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 par(mfrow = c(1,1), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
 #modelos normal
 yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll,cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
@@ -260,7 +260,7 @@ lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
 #modelos t
 #yrange <- range(cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
-#plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "IteraciÃ³n",ylab = "Log-verosimilitud", main = "Modelos t")
+#plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos t")
 lines(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.5,col = "gold")
 lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
 lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
@@ -268,11 +268,11 @@ lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
 
 
 ```{r}
-# GrÃ¡fico
+# Gráfico
 par(mfrow = c(1,2), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
 #modelos normal
 yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos normal")
 lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
 #modelos t
@@ -283,12 +283,12 @@ lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
 lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
 ```
 
-## ComparaciÃ³n de modelos
+## Comparación de modelos
 
 primero hacremos un analsis de los modelos para su densidad
 
 ```{r}
-#grÃ¡fico fondo
+#gráfico fondo
 plot(x = NA, y = NA, ylab = "Densidad", xlab = "Log-verosimilitud", cex.axis = 0.7, xlim = range(as.numeric(cadena1_M5$LL$ll), as.numeric(cadena1_M6$LL$ll),as.numeric(cadena1_M2$LL$ll),as.numeric(cadena1_M3$LL$ll)), ylim = c(0,0.12))
 # modelo dos
 hist(as.numeric(cadena1_M2$LL$ll), freq = F, add = T, col = "lightblue", border = "lightblue")
@@ -306,9 +306,9 @@ lines(density(as.numeric(cadena1_M6$LL$ll)), col = "green")
 legend("top", legend = c("Modelo 2","Modelo 3","Modelo 5","Modelo 6"), fill = c("lightblue", "burlywood", "mistyrose", "lightgreen"), border = c("blue", "brown", "magenta", "green"), bty = "n")
 ```
 
-Notamos que los modelos t tienen una **log-verosimilitud** mÃ¡s grande que los modelos **normales**, tambiÃ©n se puede ver que destaca el modelo **modelo 6** por encima de los demas con el valor mÃ¡s alto de **log-vegosimilitud promedio**
+Notamos que los modelos t tienen una **log-verosimilitud** más grande que los modelos **normales**, también se puede ver que destaca el modelo **modelo 6** por encima de los demas con el valor más alto de **log-vegosimilitud promedio**
 
-### CompraciÃ³n modelos
+### Compración modelos
 
 Usaremos el DIC para cada uno de los modelos
 
@@ -317,14 +317,14 @@ Usaremos el DIC para cada uno de los modelos
 ```{r}
 # log-verosimilitud
 LP1 <- as.numeric(cadena1_M1$LL$ll)
-# estimaciÃ³n theta_bayes
+# estimación theta_bayes
 theta_hat  <- mean(cadena1_M1$THETA$theta)
-# estimaciÃ³n sig2_bayes
+# estimación sig2_bayes
 sigma2_hat <- mean(cadena1_M1$THETA$sig2)
-# log-verosimilitud con parÃ¡metros estimacdos
+# log-verosimilitud con parámetros estimacdos
 lpyth_m1   <- sum(dnorm(x = y, mean = theta_hat, sd = sqrt(sigma2_hat), log = T))
 lpyth_m1
-# oenalizaciÃ³n por cantidad de parÃ¡metros
+# oenalización por cantidad de parámetros
 pDIC_m1    <- 2*(lpyth_m1 - mean(LP1))
 pDIC_m1
 # Criterio DIC
@@ -337,14 +337,14 @@ DIC_m1
 ```{r}
 # log-verosimilitud
 LP1 <- as.numeric(cadena1_M2$LL$ll)
-# estimaciÃ³n theta_bayes
+# estimación theta_bayes
 theta_hat  <- colMeans(cadena1_M2$THETA[,1:m])
-# estimaciÃ³n sig2_bayes
+# estimación sig2_bayes
 sigma2_hat <- mean(cadena1_M2$THETA$sig2)
-# log-verosimilitud con parÃ¡metros estimacdos
+# log-verosimilitud con parámetros estimacdos
 lpyth_m2   <- sum(dnorm(x = y, mean = rep(theta_hat,nj), sd = sqrt(sigma2_hat), log = T))
 lpyth_m2
-# oenalizaciÃ³n por cantidad de parÃ¡metros
+# oenalización por cantidad de parámetros
 pDIC_m2    <- 2*(lpyth_m2 - mean(LP1))
 pDIC_m2
 # Criterio DIC
@@ -357,14 +357,14 @@ DIC_m2
 ```{r}
 # log-verosimilitud
 LP1 <- as.numeric(cadena1_M3$LL$ll)
-# estimaciÃ³n theta_bayes
+# estimación theta_bayes
 theta_hat  <- colMeans(cadena1_M3$THETA[,1:m])
-# estimaciÃ³n sig2_bayes
+# estimación sig2_bayes
 sigma2_hat <- colMeans(cadena1_M3$THETA[,(m+1):(2*m)])
-# log-verosimilitud con parÃ¡metros estimacdos
+# log-verosimilitud con parámetros estimacdos
 lpyth_m3   <- sum(dnorm(x = y, mean = rep(theta_hat,nj), sd = sqrt(rep(sigma2_hat, nj)), log = T))
 lpyth_m3
-# oenalizaciÃ³n por cantidad de parÃ¡metros
+# oenalización por cantidad de parámetros
 pDIC_m3    <- 2*(lpyth_m3 - mean(LP1))
 pDIC_m3
 # Criterio DIC
@@ -377,14 +377,14 @@ DIC_m3
 ```{r}
 # log-verosimilitud
 LP1 <- as.numeric(cadena1_M4$LL$ll)
-# estimaciÃ³n theta_bayes
+# estimación theta_bayes
 theta_hat  <- mean(cadena1_M4$THETA$theta)
-# estimaciÃ³n sig2_bayes
+# estimación sig2_bayes
 sigma2_hat <- mean(cadena1_M4$THETA$sig2)
-# log-verosimilitud con parÃ¡metros estimacdos
+# log-verosimilitud con parámetros estimacdos
 lpyth_m4   <- sum(dt.scaled(x = y, df = 3, mean = theta_hat, sd = sqrt(sigma2_hat), log = T))
 lpyth_m4
-# oenalizaciÃ³n por cantidad de parÃ¡metros
+# oenalización por cantidad de parámetros
 pDIC_m4    <- 2*(lpyth_m4 - mean(LP1))
 pDIC_m4
 # Criterio DIC
@@ -398,14 +398,14 @@ DIC_m4
 ```{r}
 # log-verosimilitud
 LP1 <- as.numeric(cadena1_M5$LL$ll)
-# estimaciÃ³n theta_bayes
+# estimación theta_bayes
 theta_hat  <- colMeans(cadena1_M5$THETA[,1:m])
-# estimaciÃ³n sig2_bayes
+# estimación sig2_bayes
 sigma2_hat <- mean(cadena1_M5$THETA$sig2)
-# log-verosimilitud con parÃ¡metros estimacdos
+# log-verosimilitud con parámetros estimacdos
 lpyth_m5   <- sum(dt.scaled(x = y, df = 3, mean = rep(theta_hat, nj), sd = sqrt(sigma2_hat), log = T))
 lpyth_m5
-# oenalizaciÃ³n por cantidad de parÃ¡metros
+# oenalización por cantidad de parámetros
 pDIC_m5    <- 2*(lpyth_m5 - mean(LP1))
 pDIC_m5
 # Criterio DIC
@@ -418,14 +418,14 @@ DIC_m5
 ```{r}
 # log-verosimilitud
 LP1 <- as.numeric(cadena1_M6$LL$ll)
-# estimaciÃ³n theta_bayes
+# estimación theta_bayes
 theta_hat  <- colMeans(cadena1_M6$THETA[,1:m])
-# estimaciÃ³n sig2_bayes
+# estimación sig2_bayes
 sigma2_hat <- colMeans(cadena1_M6$THETA[,(m+1):(2*m)])
-# log-verosimilitud con parÃ¡metros estimacdos
+# log-verosimilitud con parámetros estimacdos
 lpyth_m6   <- sum(dt.scaled(x = y, df = 3, mean = rep(theta_hat, nj), sd = sqrt(rep(sigma2_hat, nj)), log = T))
 lpyth_m6
-# oenalizaciÃ³n por cantidad de parÃ¡metros
+# oenalización por cantidad de parámetros
 pDIC_m6    <- 2*(lpyth_m6 - mean(LP1))
 pDIC_m6
 # Criterio DIC
@@ -444,9 +444,9 @@ rownames(tab) <- c("lp","pDIC","DIC")
 knitr::kable(x = tab, digits = 2, align = "c")
 ```
 
-## Analisis para BogotÃ¡ D.C.
+## Analisis para Bogotá D.C.
 
-Usando el **modelo 6** obtendremos la informaciÃ³n relacionada con **BogotÃ¡** la cual pertenece al $n_3 = 165$ en el vector $n_j$ para $\theta$ y para $\sigma^2$.
+Usando el **modelo 6** obtendremos la información relacionada con **Bogotá** la cual pertenece al $n_3 = 165$ en el vector $n_j$ para $\theta$ y para $\sigma^2$.
 
 ```{r}
 # theta
@@ -455,20 +455,20 @@ theta_Bog <- cadena1_M6$THETA$theta3
 sig2_Bog <- cadena1_M6$THETA$sig23
 ```
 
-Para poder checar la bondad de ajuste del **modelo 6** para las siguientes estadÃ­sticas referentes al dominio de **BogotÃ¡**:
+Para poder checar la bondad de ajuste del **modelo 6** para las siguientes estadísticas referentes al dominio de **Bogotá**:
 
 1. Media
 2. Mediana
-3. DesviaciÃ³n estÃ¡ndar
-4. Coefiiente de variaciÃ³n
+3. Desviación estándar
+4. Coefiiente de variación
 5. Rango
-6. Rango intercuartÃ­lico
+6. Rango intercuartílico
 
-Primero obtendremos los estÃ¡diticos observadoes para **BogotÃ¡**, luego simularemos valores de la poblacion dados $\theta_{Bog}, \kappa$ y $\sigma^2_{Bog}$.
+Primero obtendremos los estáditicos observadoes para **Bogotá**, luego simularemos valores de la poblacion dados $\theta_{Bog}, \kappa$ y $\sigma^2_{Bog}$.
 
 ### datos observados
 
-analissi previo a **BogotÃ¡**
+analissi previo a **Bogotá**
 
 ```{r}
 # filtrar datos
@@ -488,16 +488,16 @@ yb_Bog <- as.numeric(Estadisticos[3,3])
 yb_Bog
 n_Bog <- as.numeric(Estadisticos[3,2])
 n_Bog
-# desviaciÃ³n
+# desviación
 des_Bog <- sd(Bog$Ingtot)
 des_Bog
 #mediana
 mediana_Bog <- median(Bog$Ingtot)
 mediana_Bog
-#coeficiente de variaciÃ³n
+#coeficiente de variación
 cv_Bog <- des_Bog/yb_Bog
 cv_Bog
-# rango bÃ³gota
+# rango bógota
 rango_Bog <- range(Bog$Ingtot)[2] - range(Bog$Ingtot)[1]
 rango_Bog
 # rango intercuartilico
@@ -505,12 +505,12 @@ IQR_Bog <- IQR(Bog$Ingtot)
 IQR_Bog 
 ```
 
-### SimulaciÃ³n
+### Simulación
 
-Haremos uso de la **DistribuciÃ³n predictiva posterior** para obtener las muestras de los estadisticos que nos permitan obtener el **ppp**
+Haremos uso de la **Distribución predictiva posterior** para obtener las muestras de los estadisticos que nos permitan obtener el **ppp**
 
 ```{r}
-#distribuciÃ³n predictiva posterior
+#distribución predictiva posterior
 yb_MCMC      <- NULL
 mediana_MCMC <- NULL
 des_MCMC     <- NULL
@@ -518,7 +518,7 @@ cv_MCMC      <- NULL
 rango_MCMC   <- NULL
 IQR_MCMC     <- NULL
 #Muestreo
-set.seed(1908) #aÃ±o del artÃ­culo  Biometrika
+set.seed(1908) #año del artículo  Biometrika
 for (i in 1:10000) {
       #datos
       y_pre <- rt.scaled(n = n_Bog, df = 3, mean = theta_Bog[i], sd = sqrt(sig2_Bog[i]))
@@ -532,7 +532,7 @@ for (i in 1:10000) {
       }
 ```
 
-Con lo anterior podemos encontrar los **PPP** para cada estadÃ­stico y presentarlos en un tabla
+Con lo anterior podemos encontrar los **PPP** para cada estadístico y presentarlos en un tabla
 
 ```{r}
 # tabla de resumen
@@ -551,20 +551,20 @@ knitr::kable(x = tab, digits = 3, align = "c")
 
 Usaremos el **modelo 6** para realizar un ranking bayesiano basado en las estimaciones puntuales y los intervalos de credibilidad dados para cada promedio por dominio teniendo en cuenta lo siguiente:
 
-1. Hacer la visualizaciÃ³n en escala logarÃ­tmica. 
+1. Hacer la visualización en escala logarítmica. 
 2. Rojo oscuro para efectos promedio significativamente inferiores a 13.830
 3. Negro para efectos promedio que no difieren significativamente de 13.830 
 4. Verde oscuro para efectos promedio significativamente superiores a 13.830 
-5. Observe que 13.830 corresponde a un SMLMV de 2022 en escala logarÃ­tmica.
+5. Observe que 13.830 corresponde a un SMLMV de 2022 en escala logarítmica.
 
 ```{r}
 #ranking
 THETA    <- cadena1_M6$THETA
 Dominios <- Estadisticos$Dominio
 #Estimaciones puntuales
-that     <- colMeans(THETA[,1:m])
+that <- colMeans(THETA[,1:m])
 # Int. credibilidad al 95%
-IC95    <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
+IC95 <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
 # ordernar el ranking (menor a mayor)
 orden    <- order(that)
 Dominios <- Dominios[orden]
@@ -575,13 +575,13 @@ colo <- rep(2,m)
 colo[which(IC95[1,]>13.830)] <- 1
 colo[which(IC95[2,]<13.830)] <- 3
 colo <- c("green3","black","red3")[colo]
-#GrÃ¡fico
+#Gráfico
 par(mfrow = c(1,1), mar = c(4,10,1.5,1), mgp = c(2.5,0.75,0))
 plot(NA, NA, xlab = "Ingreso total", ylab = "", main = "Ranking Bayesisano: Modelo 6", xlim = c(12.8,14.3), ylim = c(1,m), cex.axis = 0.75, yaxt = "n")
 axis(side = 2, at = 1:m, labels = Dominios, las = 2)
 abline(v = 13.830,  col = "gray", lwd = 3)
 abline(h = 1:m, col = "lightgray", lwd = 1)
-# intervalo y estimaciÃ³n puntual
+# intervalo y estimación puntual
 for (j in 1:m) {
   segments(x0 = IC95[1,j], y0 = j, x1 = IC95[2,j], y1 = j, col = colo[j])
   lines(x = that[j], y = j, type = "p", pch = 16, cex = 0.8, col = colo[j])
@@ -599,61 +599,29 @@ Usando el **modelo 6** y de acuerdo con el ranking anterior el top 5 son los  si
 4. Bogota
 5. Bucaramanga
 
-Usaremos la **DistribuciÃ³n predictiva posterior** para poder estimar puntualmente  la media, la desviaciÃ³n estandar y el coeficiente de variaciÃ³n de ada dominio.
+Usaremos la **Distribución predictiva posterior** para poder estimar puntualmente  la media, la desviación estandar y el coeficiente de variación de ada dominio.
 
 ```{r}
 # informacion del top 5
 THETA_top5 <- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
-n_top5 <- nj[c(11, 10, 23, 3, 4)]
-# Simulacion para estimar
-#distribuciÃ³n predictiva posterior
-yb_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
-des_MCMC     <- matrix(data = NA, nrow=10000, ncol = 5)
-cv_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
-#Muestreo
-set.seed(1908) #aÃ±o del artÃ­culo  Biometrika
-for (i in 1:10000) {
-      #datos
-      y_pre_Me <- rt.scaled(n = n_top5[1], df = 3, mean = THETA_top5[i,1], sd = sqrt(THETA_top5[i,6]))
-      y_pre_Ma <- rt.scaled(n = n_top5[2], df = 3, mean = THETA_top5[i,2], sd = sqrt(THETA_top5[i,7]))
-      y_pre_Tu <- rt.scaled(n = n_top5[3], df = 3, mean = THETA_top5[i,3], sd = sqrt(THETA_top5[i,8]))
-      y_pre_Bo <- rt.scaled(n = n_top5[4], df = 3, mean = THETA_top5[i,4], sd = sqrt(THETA_top5[i,9]))
-      y_pre_Bu <- rt.scaled(n = n_top5[5], df = 3, mean = THETA_top5[i,5], sd = sqrt(THETA_top5[i,10]))
-      #estadisticas Medellin
-      yb_MCMC[i,1]  <- mean(y_pre_Me)
-      des_MCMC[i,1] <- sd(y_pre_Me)
-      cv_MCMC[i,1]  <- sd(y_pre_Me)/mean(y_pre_Me) * 100
-      #estadisticas Manizales
-      yb_MCMC[i,2]  <- mean(y_pre_Ma)
-      des_MCMC[i,2] <- sd(y_pre_Ma)
-      cv_MCMC[i,2]  <- sd(y_pre_Ma)/mean(y_pre_Ma) * 100
-      #estadisticas Tunja
-      yb_MCMC[i,3]  <- mean(y_pre_Tu)
-      des_MCMC[i,3] <- sd(y_pre_Tu)
-      cv_MCMC[i,3]  <- sd(y_pre_Tu)/mean(y_pre_Tu) * 100
-      #estadisticas BogotÃ¡
-      yb_MCMC[i,4]  <- mean(y_pre_Bo)
-      des_MCMC[i,4] <- sd(y_pre_Bo)
-      cv_MCMC[i,4]  <- sd(y_pre_Bo)/mean(y_pre_Bo) * 100
-      #estadisticas Bucaramanga
-      yb_MCMC[i,5]  <- mean(y_pre_Bu)
-      des_MCMC[i,5] <- sd(y_pre_Bu)
-      cv_MCMC[i,5]  <- sd(y_pre_Bu)/mean(y_pre_Bu) * 100
-}
+#Estimaciones
+yb_top5 <- colMeans(THETA_top5[,1:5])
+sd_top5 <- sqrt(3*colMeans(THETA_top5[,6:10]))
+cv_top5 <- (sd_top5/yb_top5) *100
+# pasar a escala normal
+yb_top5 <- exp(yb_top5)
+sd_top5 <- exp(sd_top5)
 # tabla de resumen
-tab <- matrix(c(mean(yb_MCMC[,1]), mean(yb_MCMC[,2]), mean(yb_MCMC[,3]), mean(yb_MCMC[,4]), mean(yb_MCMC[,5]),
-                mean(des_MCMC[,1]), mean(des_MCMC[,2]), mean(des_MCMC[,3]), mean(des_MCMC[,4]), mean(des_MCMC[,5]),
-                mean(cv_MCMC[,1]), mean(cv_MCMC[,2]), mean(cv_MCMC[,3]), mean(cv_MCMC[,4]), mean(cv_MCMC[,5])),
-              nrow = 3, ncol = 5, byrow = T)
-#tab[1,] <- exp(tab[1,])
-#tab[2,] <- exp(tab[2,])
-colnames(tab) <- c("Med.", "Man.", "Tun.","Bog.", "Buca.")
-rownames(tab) <- c("Media","Des. Esta.","CV %")
+tab <- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
+                sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
+                cv_top5[1], cv_top5[2], cv_top5[3], cv_top5[4], cv_top5[5]),nrow = 3,
+              ncol = 5, byrow = T)
+colnames(tab) <- c("Med", "Man", "Tun","Bog", "Buca")
+rownames(tab) <- c("Media","SD","CV%")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
-
-Ahora procederemos a obtener la segmentación jerárquica en 4 grupos.
+## Segmentación jerárquica
 
 ```{r}
 #install.packages("dendextend")
@@ -665,14 +633,14 @@ library(cluster)
 library(grid)
 library(datawizard)
 
-theta  <- cadena1_M6$THETA[c(1:25)]
-sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
+theta  <- exp(cadena1_M6$THETA[c(1:25)])
+sigma2 <- exp(sqrt(3*cadena1_M6$THETA[c(26:50)]))
 theta_est  <- colMeans(theta)
 sigma2_est <- colMeans(sigma2)
 arreglo <- data.frame(theta_est=normalize(theta_est),
                       sigma2_est=normalize(sigma2_est))
 rownames(arreglo) <- unique(Data$Dominio)
-
+arreglo
 
 # Paso 1: Calcular la matriz de distancias entre los dominios
 dist_matrix <- get_dist(arreglo, method = "euclidian", stand = T)
@@ -685,6 +653,8 @@ groups <- cutree(hclust_result, k = 4)
 
 # Paso 4: Mostrar los resultados
 results <- data.frame(Grupo = as.factor(groups), arreglo)
+results 
+
 # Paso 5: Ordenar los grupos y los colores según el orden de las ramas
 order <- order.dendrogram(as.dendrogram(hclust_result))
 groups <- groups[order]
@@ -704,13 +674,9 @@ clases_aj <- cutree(hclust_result, k = 4)
 results$Grupo <- clases_aj
 results$Etiqueta <- rownames(results)
 ggplot() + geom_text(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), data = results, size = 2) +
+      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 2) +
       scale_colour_gradientn(colours= colores) +
       ggtitle('Clusters de Datos con k = 4 / Agrupamiento Jerárquico') + 
       xlab(expression(hat(theta))) + ylab(expression(hat(sigma)^2)) 
 ```
-
-
-
-
-
 
