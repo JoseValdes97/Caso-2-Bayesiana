@@ -115,7 +115,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M1$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
 
 ## Modelo 2
@@ -140,7 +140,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M2$LL$ll)
-plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
+plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
 
 
@@ -166,7 +166,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M3$LL$ll)
-plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 3")
+plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 3")
 ```
 
 ## Modelo 4
@@ -191,7 +191,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M4$LL$ll)
-plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
+plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
 
 ## Modelo 5
@@ -217,7 +217,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M5$LL$ll)
-plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 5")
+plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 5")
 ```
 
 ## Modelo 6
@@ -244,7 +244,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M6$LL$ll)
-plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 6")
+plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 6")
 ```
 
 
@@ -255,7 +255,7 @@ plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim 
 par(mfrow = c(1,1), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
 #modelos normal
 yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll,cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelos")
 lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
 #modelos t
@@ -272,12 +272,12 @@ lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
 par(mfrow = c(1,2), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
 #modelos normal
 yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelos")
 lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
 #modelos t
 yrange <- range(cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
-plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos t")
+plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "gold", ylim = yrange,  xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelos t")
 #lines(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.5,col = "gold")
 lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
 lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
@@ -578,7 +578,7 @@ colo <- c("green3","black","red3")[colo]
 #Gráfico
 par(mfrow = c(1,1), mar = c(4,10,1.5,1), mgp = c(2.5,0.75,0))
 plot(NA, NA, xlab = "Ingreso total", ylab = "", main = "Ranking Bayesisano: Modelo 6", xlim = c(12.8,14.3), ylim = c(1,m), cex.axis = 0.75, yaxt = "n")
-axis(side = 2, at = 1:m, labels = Dominios, las = 2)
+axis(side = 2, at = 1:m, labels = Dominios, las = 2, cex.axis = 0.6)
 abline(v = 13.830,  col = "gray", lwd = 3)
 abline(h = 1:m, col = "lightgray", lwd = 1)
 # intervalo y estimación puntual
