@@ -526,7 +526,7 @@ for (i in 1:10000) {
       yb_MCMC[i]      <- mean(y_pre)
       mediana_MCMC[i] <- median(y_pre)
       des_MCMC[i]     <- sd(y_pre)
-      cv_MCMC[i]      <- sd(y_pre)/mean(y_pre)
+      cv_MCMC[i]      <- (sd(y_pre))/mean(y_pre)
       rango_MCMC[i]   <- range(y_pre)[2] - range(y_pre)[1]
       IQR_MCMC[i]     <- IQR(y_pre) 
       }
@@ -536,14 +536,15 @@ Con lo anterior podemos encontrar los **PPP** para cada estadístico y presentar
 
 ```{r}
 # tabla de resumen
-tab <- matrix(c(yb_Bog, mediana_Bog, des_Bog, cv_Bog, rango_Bog, IQR_Bog,
-                mean(yb_MCMC), mean(mediana_MCMC), mean(des_MCMC), mean(cv_MCMC),
-                mean(rango_MCMC), mean(IQR_MCMC),
-                mean(yb_MCMC > yb_Bog), mean(mediana_MCMC > mediana_Bog) ,
-                mean(des_MCMC > des_Bog), mean(cv_MCMC > cv_Bog), mean(rango_MCMC > rango_Bog),
-                mean(IQR_MCMC > IQR_Bog)),nrow = 3, ncol = 6, byrow = T)
-colnames(tab) <- c("Media", "Q50%", "SD","CV", "Rango","IQR")
-rownames(tab) <- c("Observado","Estimado","PPP")
+tab <- matrix(c(yb_Bog, quantile(yb_MCMC,probs = 0.025), mean(yb_MCMC), quantile(yb_MCMC,probs = 0.975), mean(yb_MCMC > yb_Bog),
+                mediana_Bog, quantile(mediana_MCMC,probs = 0.025), mean(mediana_MCMC), quantile(mediana_MCMC,probs = 0.975), mean(mediana_MCMC > mediana_Bog),
+                des_Bog, quantile(des_MCMC,probs = 0.025), mean(des_MCMC), quantile(des_MCMC,probs = 0.975), mean(des_MCMC > des_Bog),
+                cv_Bog, quantile(cv_MCMC,probs = 0.025),  mean(cv_MCMC), quantile(cv_MCMC,probs = 0.975), mean(cv_MCMC > cv_Bog),
+                rango_Bog, quantile(rango_MCMC,probs = 0.025), mean(rango_MCMC), quantile(rango_MCMC,probs = 0.975), mean(rango_MCMC > rango_Bog),
+                IQR_Bog, quantile(IQR_MCMC,probs = 0.025), mean(IQR_MCMC), quantile(IQR_MCMC,probs = 0.975),
+                mean(IQR_MCMC > IQR_Bog)),nrow = 6, ncol = 5, byrow = T)
+colnames(tab) <- c("Observado", "Q2.5%", "Estimado", "Q97.5%","PPP")
+rownames(tab) <- c("Media", "Q50%", "SD","CV", "Rango","IQR")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
