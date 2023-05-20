@@ -7,8 +7,8 @@ library(cluster)
 library(grid)
 library(datawizard)
 
-theta  <- exp(cadena1_M6$THETA[c(1:25)])
-sigma2 <- exp(sqrt(3*cadena1_M6$THETA[c(26:50)]))
+theta  <- cadena1_M6$THETA[c(1:25)]
+sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
 theta_est  <- colMeans(theta)
 sigma2_est <- colMeans(sigma2)
 arreglo <- data.frame(theta_est=normalize(theta_est),
@@ -17,11 +17,11 @@ rownames(arreglo) <- unique(Data$Dominio)
 arreglo
 
 # Paso 1: Calcular la matriz de distancias entre los dominios
-dist_matrix <- get_dist(arreglo, method = "euclidian", stand = T)
+dist_matrix <- get_dist(arreglo, method = "euclidian", stand = F)
                         
 # Paso 2: Realizar la agrupación jerárquica
 set.seed(2013)
-hclust_result <- hclust(dist_matrix, method = "average")
+hclust_result <- hclust(dist_matrix, method = "complete")
 # Paso 3: Obtener la segmentación en cuatro grupos
 groups <- cutree(hclust_result, k = 4)
 
@@ -44,11 +44,13 @@ legend("topright", legend = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"),
        col = colores, lty = 1, lwd = 2)
 
 # fviz_cluster(list(data = arreglo, cluster = groups))
+library(ggrepel)
 clases_aj <- cutree(hclust_result, k = 4)
 results$Grupo <- clases_aj
 results$Etiqueta <- rownames(results)
-ggplot() + geom_text(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), data = results, size = 2) +
-      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 2) +
+ggplot() + geom_text_repel(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), 
+                           data = results, size = 2) +
+      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 0.5) +
       scale_colour_gradientn(colours= colores) +
-      ggtitle('Clusters de Datos con k = 4 / Agrupamiento Jerárquico') + 
-      xlab(expression(hat(theta))) + ylab(expression(hat(sigma)^2)) 
+      ggtitle('Agrupamiento Jerárquico en 4 grupos') + 
+      xlab(expression(hat(theta))) + ylab(expression(hat(sigma))) 

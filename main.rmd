@@ -115,7 +115,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M1$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
+m1 <- plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
 
 ## Modelo 2
@@ -140,7 +140,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M2$LL$ll)
-plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
+m2 <- plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
 
 
@@ -166,7 +166,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M3$LL$ll)
-plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 3")
+m3 <- plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 3")
 ```
 
 ## Modelo 4
@@ -191,7 +191,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M4$LL$ll)
-plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
+m4 <- plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
 
 ## Modelo 5
@@ -217,7 +217,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M5$LL$ll)
-plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 5")
+m5 <- plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 5")
 ```
 
 ## Modelo 6
@@ -244,7 +244,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M6$LL$ll)
-plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 6")
+m6 <- plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 6")
 ```
 
 
@@ -275,12 +275,14 @@ yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll)
 plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos normal")
 lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
+legend("center", legend = c("Modelo 1", "Modelo 2", "Modelo 3"),col = c("darkblue","cyan","brown"), lty = 1, lwd = 2)
 #modelos t
 yrange <- range(cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
 plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos t")
 #lines(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.5,col = "gold")
 lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
 lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
+legend("center", legend = c("Modelo 4", "Modelo 5", "Modelo 6"),col = c("lightblue","magenta","darkgreen"), lty = 1, lwd = 2)
 ```
 
 ## Comparación de modelos
@@ -586,6 +588,8 @@ for (j in 1:m) {
   segments(x0 = IC95[1,j], y0 = j, x1 = IC95[2,j], y1 = j, col = colo[j])
   lines(x = that[j], y = j, type = "p", pch = 16, cex = 0.8, col = colo[j])
 }
+# coordenadas específicas para la leyenda
+legend("topleft", legend = c("Mayor a 13.830", "Contiene a 13.830", "Menor a 13.830"), col = c(unique(colo)), lty = 1, lwd = 2,bty="n")
 
 ```
 
@@ -633,8 +637,8 @@ library(cluster)
 library(grid)
 library(datawizard)
 
-theta  <- exp(cadena1_M6$THETA[c(1:25)])
-sigma2 <- exp(sqrt(3*cadena1_M6$THETA[c(26:50)]))
+theta  <- cadena1_M6$THETA[c(1:25)]
+sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
 theta_est  <- colMeans(theta)
 sigma2_est <- colMeans(sigma2)
 arreglo <- data.frame(theta_est=normalize(theta_est),
@@ -643,11 +647,11 @@ rownames(arreglo) <- unique(Data$Dominio)
 arreglo
 
 # Paso 1: Calcular la matriz de distancias entre los dominios
-dist_matrix <- get_dist(arreglo, method = "euclidian", stand = T)
+dist_matrix <- get_dist(arreglo, method = "euclidian", stand = F)
                         
 # Paso 2: Realizar la agrupación jerárquica
 set.seed(2013)
-hclust_result <- hclust(dist_matrix, method = "average")
+hclust_result <- hclust(dist_matrix, method = "complete")
 # Paso 3: Obtener la segmentación en cuatro grupos
 groups <- cutree(hclust_result, k = 4)
 
@@ -670,13 +674,16 @@ legend("topright", legend = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"),
        col = colores, lty = 1, lwd = 2)
 
 # fviz_cluster(list(data = arreglo, cluster = groups))
+library(ggrepel)
 clases_aj <- cutree(hclust_result, k = 4)
 results$Grupo <- clases_aj
 results$Etiqueta <- rownames(results)
-ggplot() + geom_text(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), data = results, size = 2) +
-      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 2) +
+ggplot() + geom_text_repel(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), 
+                           data = results, size = 2) +
+      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 0.5) +
       scale_colour_gradientn(colours= colores) +
-      ggtitle('Clusters de Datos con k = 4 / Agrupamiento Jerárquico') + 
-      xlab(expression(hat(theta))) + ylab(expression(hat(sigma)^2)) 
+      ggtitle('Agrupamiento Jerárquico en 4 grupos') + 
+      xlab(expression(hat(theta))) + ylab(expression(hat(sigma))) 
+
 ```
 
