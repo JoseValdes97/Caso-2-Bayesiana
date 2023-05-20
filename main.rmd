@@ -115,7 +115,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M1$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 1")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkblue", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 1")
 ```
 
 ## Modelo 2
@@ -140,7 +140,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M2$LL$ll)
-plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 2")
+plot(cadena1_M2$LL$ll, type = "p", pch = 20, cex = 0.8, col = "cyan", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 2")
 ```
 
 
@@ -166,7 +166,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M3$LL$ll)
-plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 3")
+plot(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.8, col = "brown", ylim = yrange,  xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 3")
 ```
 
 ## Modelo 4
@@ -191,7 +191,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M4$LL$ll)
-plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 4")
+plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.8, col = "gold", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 4")
 ```
 
 ## Modelo 5
@@ -217,7 +217,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M5$LL$ll)
-plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 5")
+plot(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.8, col = "magenta", ylim = yrange,  xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 5")
 ```
 
 ## Modelo 6
@@ -244,7 +244,7 @@ Usaremos la log-verosimilitud para mirar la convergencia de la cadena
 ```{r}
 # Gráfico
 yrange <- range(cadena1_M6$LL$ll)
-plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelo 6")
+plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelo 6")
 ```
 
 
@@ -255,7 +255,7 @@ plot(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.8, col = "darkgreen", ylim 
 par(mfrow = c(1,1), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
 #modelos normal
 yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll,cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelos")
 lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
 #modelos t
@@ -272,12 +272,12 @@ lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
 par(mfrow = c(1,2), mar = c(2.75,2.75,1.5,0.5), mgp=c(1.7,0.7,0))
 #modelos normal
 yrange <- range(cadena1_M1$LL$ll, cadena1_M2$LL$ll,cadena1_M3$LL$ll)
-plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos")
+plot(cadena1_M1$LL$ll, type = "p", pch = 20, cex = 0.5, col = "darkblue", ylim = yrange, xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelos")
 lines(cadena1_M2$LL$ll, type = "p",pch = 20, cex = 0.5,col = "cyan")
 lines(cadena1_M3$LL$ll, type = "p", pch = 20, cex = 0.5,col = "brown")
 #modelos t
 yrange <- range(cadena1_M4$LL$ll, cadena1_M5$LL$ll,cadena1_M6$LL$ll)
-plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "lightblue", ylim = yrange,  xlab = "Iteración",ylab = "Log-verosimilitud", main = "Modelos t")
+plot(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.6, col = "gold", ylim = yrange,  xlab = "Iteracion",ylab = "Log-verosimilitud", main = "Modelos t")
 #lines(cadena1_M4$LL$ll, type = "p", pch = 20, cex = 0.5,col = "gold")
 lines(cadena1_M5$LL$ll, type = "p", pch = 20, cex = 0.5,col = "magenta")
 lines(cadena1_M6$LL$ll, type = "p", pch = 20, cex = 0.5,col = "darkgreen")
@@ -526,7 +526,7 @@ for (i in 1:10000) {
       yb_MCMC[i]      <- mean(y_pre)
       mediana_MCMC[i] <- median(y_pre)
       des_MCMC[i]     <- sd(y_pre)
-      cv_MCMC[i]      <- sd(y_pre)/mean(y_pre)
+      cv_MCMC[i]      <- (sd(y_pre))/mean(y_pre)
       rango_MCMC[i]   <- range(y_pre)[2] - range(y_pre)[1]
       IQR_MCMC[i]     <- IQR(y_pre) 
       }
@@ -536,14 +536,15 @@ Con lo anterior podemos encontrar los **PPP** para cada estadístico y presentar
 
 ```{r}
 # tabla de resumen
-tab <- matrix(c(yb_Bog, mediana_Bog, des_Bog, cv_Bog, rango_Bog, IQR_Bog,
-                mean(yb_MCMC), mean(mediana_MCMC), mean(des_MCMC), mean(cv_MCMC),
-                mean(rango_MCMC), mean(IQR_MCMC),
-                mean(yb_MCMC > yb_Bog), mean(mediana_MCMC > mediana_Bog) ,
-                mean(des_MCMC > des_Bog), mean(cv_MCMC > cv_Bog), mean(rango_MCMC > rango_Bog),
-                mean(IQR_MCMC > IQR_Bog)),nrow = 3, ncol = 6, byrow = T)
-colnames(tab) <- c("Media", "Q50%", "SD","CV", "Rango","IQR")
-rownames(tab) <- c("Observado","Estimado","PPP")
+tab <- matrix(c(yb_Bog, quantile(yb_MCMC,probs = 0.025), mean(yb_MCMC), quantile(yb_MCMC,probs = 0.975), mean(yb_MCMC > yb_Bog),
+                mediana_Bog, quantile(mediana_MCMC,probs = 0.025), mean(mediana_MCMC), quantile(mediana_MCMC,probs = 0.975), mean(mediana_MCMC > mediana_Bog),
+                des_Bog, quantile(des_MCMC,probs = 0.025), mean(des_MCMC), quantile(des_MCMC,probs = 0.975), mean(des_MCMC > des_Bog),
+                cv_Bog, quantile(cv_MCMC,probs = 0.025),  mean(cv_MCMC), quantile(cv_MCMC,probs = 0.975), mean(cv_MCMC > cv_Bog),
+                rango_Bog, quantile(rango_MCMC,probs = 0.025), mean(rango_MCMC), quantile(rango_MCMC,probs = 0.975), mean(rango_MCMC > rango_Bog),
+                IQR_Bog, quantile(IQR_MCMC,probs = 0.025), mean(IQR_MCMC), quantile(IQR_MCMC,probs = 0.975),
+                mean(IQR_MCMC > IQR_Bog)),nrow = 6, ncol = 5, byrow = T)
+colnames(tab) <- c("Observado", "Q2.5%", "Estimado", "Q97.5%","PPP")
+rownames(tab) <- c("Media", "Q50%", "SD","CV", "Rango","IQR")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
@@ -562,9 +563,9 @@ Usaremos el **modelo 6** para realizar un ranking bayesiano basado en las estima
 THETA    <- cadena1_M6$THETA
 Dominios <- Estadisticos$Dominio
 #Estimaciones puntuales
-that     <- colMeans(THETA[,1:m])
+that <- colMeans(THETA[,1:m])
 # Int. credibilidad al 95%
-IC95    <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
+IC95 <- apply(X = THETA[,1:m], MARGIN = 2, FUN = function(x) quantile(x, c(0.025,0.975)))
 # ordernar el ranking (menor a mayor)
 orden    <- order(that)
 Dominios <- Dominios[orden]
@@ -578,7 +579,7 @@ colo <- c("green3","black","red3")[colo]
 #Gráfico
 par(mfrow = c(1,1), mar = c(4,10,1.5,1), mgp = c(2.5,0.75,0))
 plot(NA, NA, xlab = "Ingreso total", ylab = "", main = "Ranking Bayesisano: Modelo 6", xlim = c(12.8,14.3), ylim = c(1,m), cex.axis = 0.75, yaxt = "n")
-axis(side = 2, at = 1:m, labels = Dominios, las = 2)
+axis(side = 2, at = 1:m, labels = Dominios, las = 2, cex.axis = 0.6)
 abline(v = 13.830,  col = "gray", lwd = 3)
 abline(h = 1:m, col = "lightgray", lwd = 1)
 # intervalo y estimación puntual
@@ -604,56 +605,131 @@ Usaremos la **Distribución predictiva posterior** para poder estimar puntualmen
 ```{r}
 # informacion del top 5
 THETA_top5 <- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
-n_top5 <- nj[c(11, 10, 23, 3, 4)]
-# Simulacion para estimar
-#distribución predictiva posterior
-yb_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
-des_MCMC     <- matrix(data = NA, nrow=10000, ncol = 5)
-cv_MCMC      <- matrix(data = NA, nrow=10000, ncol = 5)
-#Muestreo
-set.seed(1908) #año del artículo  Biometrika
-for (i in 1:10000) {
-      #datos
-      y_pre_Me <- rt.scaled(n = n_top5[1], df = 3, mean = THETA_top5[i,1], sd = sqrt(THETA_top5[i,6]))
-      y_pre_Ma <- rt.scaled(n = n_top5[2], df = 3, mean = THETA_top5[i,2], sd = sqrt(THETA_top5[i,7]))
-      y_pre_Tu <- rt.scaled(n = n_top5[3], df = 3, mean = THETA_top5[i,3], sd = sqrt(THETA_top5[i,8]))
-      y_pre_Bo <- rt.scaled(n = n_top5[4], df = 3, mean = THETA_top5[i,4], sd = sqrt(THETA_top5[i,9]))
-      y_pre_Bu <- rt.scaled(n = n_top5[5], df = 3, mean = THETA_top5[i,5], sd = sqrt(THETA_top5[i,10]))
-      #estadisticas Medellin
-      yb_MCMC[i,1]  <- mean(y_pre_Me)
-      des_MCMC[i,1] <- sd(y_pre_Me)
-      cv_MCMC[i,1]  <- sd(y_pre_Me)/mean(y_pre_Me) * 100
-      #estadisticas Manizales
-      yb_MCMC[i,2]  <- mean(y_pre_Ma)
-      des_MCMC[i,2] <- sd(y_pre_Ma)
-      cv_MCMC[i,2]  <- sd(y_pre_Ma)/mean(y_pre_Ma) * 100
-      #estadisticas Tunja
-      yb_MCMC[i,3]  <- mean(y_pre_Tu)
-      des_MCMC[i,3] <- sd(y_pre_Tu)
-      cv_MCMC[i,3]  <- sd(y_pre_Tu)/mean(y_pre_Tu) * 100
-      #estadisticas Bogotá
-      yb_MCMC[i,4]  <- mean(y_pre_Bo)
-      des_MCMC[i,4] <- sd(y_pre_Bo)
-      cv_MCMC[i,4]  <- sd(y_pre_Bo)/mean(y_pre_Bo) * 100
-      #estadisticas Bucaramanga
-      yb_MCMC[i,5]  <- mean(y_pre_Bu)
-      des_MCMC[i,5] <- sd(y_pre_Bu)
-      cv_MCMC[i,5]  <- sd(y_pre_Bu)/mean(y_pre_Bu) * 100
-}
+#Estimaciones
+yb_top5 <- colMeans(THETA_top5[,1:5])
+sd_top5 <- sqrt(3*colMeans(THETA_top5[,6:10]))
+cv_top5 <- (sd_top5/yb_top5)
+# pasar a escala normal
+yb_top5 <- exp(yb_top5)
+sd_top5 <- exp(sd_top5)
+cv_top5 <- cv_top5
 # tabla de resumen
-tab <- matrix(c(mean(yb_MCMC[,1]), mean(yb_MCMC[,2]), mean(yb_MCMC[,3]), mean(yb_MCMC[,4]), mean(yb_MCMC[,5]),
-                mean(des_MCMC[,1]), mean(des_MCMC[,2]), mean(des_MCMC[,3]), mean(des_MCMC[,4]), mean(des_MCMC[,5]),
-                mean(cv_MCMC[,1]), mean(cv_MCMC[,2]), mean(cv_MCMC[,3]), mean(cv_MCMC[,4]), mean(cv_MCMC[,5])),
-              nrow = 3, ncol = 5, byrow = T)
-#tab[1,] <- exp(tab[1,])
-#tab[2,] <- exp(tab[2,])
-colnames(tab) <- c("Med.", "Man.", "Tun.","Bog.", "Buca.")
-rownames(tab) <- c("Media","Des. Esta.","CV %")
+tab <- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
+                sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
+                cv_top5[1], cv_top5[2], cv_top5[3], cv_top5[4], cv_top5[5]),nrow = 3,
+              ncol = 5, byrow = T)
+colnames(tab) <- c("Med", "Man", "Tun","Bog", "Buca")
+rownames(tab) <- c("Media","SD","CV%")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
+pruebas para deviacion bogota datos reales
 
+```{r}
+# datos escala pesos
+dataPrueba <- data.frame(dat$dominio, dat$ingtot)
+#nombres
+names(dataPrueba) <- c("Dominio","Ingtot")
+# filtrar datos
+BogPrueba <- dataPrueba %>% 
+      filter(Dominio == "BOGOTA")
+# mirar datos
+par(mfrow =c(1,2))
+boxplot(BogPrueba$Ingtot)
+boxplot(log(BogPrueba$Ingtot))
+# media 
+mean(BogPrueba$Ingtot)
+#sd
+sd(BogPrueba$Ingtot)
 
+```
+Prueba para punto 6
 
+exponenciandolos resultados de la tabla 
 
+```{r}
+# informacion del top 5
+THETA_top5 <-exp(THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)])
+#Estimaciones
+yb_top5 <- colMeans(THETA_top5[,1:5])
+sd_top5 <- sqrt(3*colMeans(THETA_top5[,6:10]))
+cv_top5 <- (sd_top5/yb_top5)
+# pasar a escala normal
+#yb_top5 <- exp(yb_top5)
+#sd_top5 <- exp(sd_top5)
+# tabla de resumen
+tab <- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
+                sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
+                cv_top5[1], cv_top5[2], cv_top5[3], cv_top5[4], cv_top5[5]),nrow = 3,
+              ncol = 5, byrow = T)
+colnames(tab) <- c("Med", "Man", "Tun","Bog", "Buca")
+rownames(tab) <- c("Media","SD","CV%")
+knitr::kable(x = tab, digits = 3, align = "c")
+```
+
+## Segmentación jerárquica
+
+```{r}
+#install.packages("dendextend")
+#install.packages("data.table")
+#install.packages("factoextra")
+#install.packages("factoextra")
+#install.packages("grid")
+#install.packages("datawizard")
+suppressMessages(suppressWarnings(library(dendextend)))
+suppressMessages(suppressWarnings(library(data.table)))
+suppressMessages(suppressWarnings(library(factoextra)))
+suppressMessages(suppressWarnings(library(cluster)))
+suppressMessages(suppressWarnings(library(grid)))
+suppressMessages(suppressWarnings(library(datawizard)))
+
+theta  <- cadena1_M6$THETA[c(1:25)]
+sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
+theta_est  <- colMeans(theta)
+sigma2_est <- colMeans(sigma2)
+arreglo <- data.frame(theta_est=normalize(theta_est),
+                      sigma2_est=normalize(sigma2_est))
+rownames(arreglo) <- unique(Data$Dominio)
+arreglo
+
+# Paso 1: Calcular la matriz de distancias entre los dominios
+dist_matrix <- get_dist(arreglo, method = "euclidian", stand = F)
+                        
+# Paso 2: Realizar la agrupación jerárquica
+set.seed(2013)
+hclust_result <- hclust(dist_matrix, method = "complete")
+# Paso 3: Obtener la segmentación en cuatro grupos
+groups <- cutree(hclust_result, k = 4)
+
+# Paso 4: Mostrar los resultados
+results <- data.frame(Grupo = as.factor(groups), arreglo)
+results 
+
+# Paso 5: Ordenar los grupos y los colores según el orden de las ramas
+order <- order.dendrogram(as.dendrogram(hclust_result))
+groups <- groups[order]
+colores <- c("red", "blue", "green", "darkorange")
+colores_grupo <- colores[groups]
+
+# Paso 6: Graficar el dendrograma con los nombres de las hojas
+plot(hclust_result, main = "Dendrograma de Segmentación", cex= 0.45,
+     xlab= "Distancias entre individuos", ylab="Pesos",check = T,ann = T, hang = -1)
+rect.hclust(hclust_result, k = 4, border = unique(colores_grupo))
+# Paso 7: Ajustar la leyenda
+legend("topright", legend = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"),
+       col = colores, lty = 1, lwd = 2)
+
+# fviz_cluster(list(data = arreglo, cluster = groups))
+library(ggrepel)
+clases_aj <- cutree(hclust_result, k = 4)
+results$Grupo <- clases_aj
+results$Etiqueta <- rownames(results)
+ggplot() + geom_text_repel(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), 
+                           data = results, size = 2) +
+      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 0.5) +
+      scale_colour_gradientn(colours= colores) +
+      ggtitle('Agrupamiento Jerárquico en 4 grupos') + 
+      xlab(expression(hat(theta))) + ylab(expression(hat(sigma))) 
+
+```
 
