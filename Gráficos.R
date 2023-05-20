@@ -18,7 +18,7 @@ legend(locator(1),legend = c("M1","M2","M3","M4","M5","M6"),
        lty=c(0,0,0,0,0,0),lwd=2, pch =  17, pt.cex = 1, cex= 0.9)
 #Gráfico 2
 par(mfrow = c(1,2))
-boxplot(Bog$Ingtot, main = "Bogotá")
+boxplot(Bog$Ingtot, main = "Bogotá", ylab= "Ingresos")
 plot(x = NA, y = NA, ylab = "Densidad", xlab = "Ingresos totales", cex.axis = 0.7,
       xlim = range(Bog$Ingtot),ylim = c(0,0.5), main= "Histograma de Bogotá")
 hist(Bog$Ingtot, freq = F, add = T, col = "mistyrose", border = "mistyrose")

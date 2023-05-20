@@ -608,10 +608,11 @@ THETA_top5 <- THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)]
 #Estimaciones
 yb_top5 <- colMeans(THETA_top5[,1:5])
 sd_top5 <- sqrt(3*colMeans(THETA_top5[,6:10]))
-cv_top5 <- (sd_top5/yb_top5) *100
+cv_top5 <- (sd_top5/yb_top5)
 # pasar a escala normal
 yb_top5 <- exp(yb_top5)
 sd_top5 <- exp(sd_top5)
+cv_top5 <- cv_top5
 # tabla de resumen
 tab <- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
                 sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
@@ -622,8 +623,113 @@ rownames(tab) <- c("Media","SD","CV%")
 knitr::kable(x = tab, digits = 3, align = "c")
 ```
 
+pruebas para deviacion bogota datos reales
 
+```{r}
+# datos escala pesos
+dataPrueba <- data.frame(dat$dominio, dat$ingtot)
+#nombres
+names(dataPrueba) <- c("Dominio","Ingtot")
+# filtrar datos
+BogPrueba <- dataPrueba %>% 
+      filter(Dominio == "BOGOTA")
+# mirar datos
+par(mfrow =c(1,2))
+boxplot(BogPrueba$Ingtot)
+boxplot(log(BogPrueba$Ingtot))
+# media 
+mean(BogPrueba$Ingtot)
+#sd
+sd(BogPrueba$Ingtot)
 
+```
+Prueba para punto 6
 
+exponenciandolos resultados de la tabla 
 
+```{r}
+# informacion del top 5
+THETA_top5 <-exp(THETA[,c(11, 10, 23, 3, 4, 36, 35, 48, 28, 29)])
+#Estimaciones
+yb_top5 <- colMeans(THETA_top5[,1:5])
+sd_top5 <- sqrt(3*colMeans(THETA_top5[,6:10]))
+cv_top5 <- (sd_top5/yb_top5)
+# pasar a escala normal
+#yb_top5 <- exp(yb_top5)
+#sd_top5 <- exp(sd_top5)
+# tabla de resumen
+tab <- matrix(c(yb_top5[1], yb_top5[2], yb_top5[3], yb_top5[4], yb_top5[5],
+                sd_top5[1], sd_top5[2], sd_top5[3], sd_top5[4], sd_top5[5],
+                cv_top5[1], cv_top5[2], cv_top5[3], cv_top5[4], cv_top5[5]),nrow = 3,
+              ncol = 5, byrow = T)
+colnames(tab) <- c("Med", "Man", "Tun","Bog", "Buca")
+rownames(tab) <- c("Media","SD","CV%")
+knitr::kable(x = tab, digits = 3, align = "c")
+```
+
+## Segmentación jerárquica
+
+```{r}
+#install.packages("dendextend")
+#install.packages("data.table")
+#install.packages("factoextra")
+#install.packages("factoextra")
+#install.packages("grid")
+#install.packages("datawizard")
+suppressMessages(suppressWarnings(library(dendextend)))
+suppressMessages(suppressWarnings(library(data.table)))
+suppressMessages(suppressWarnings(library(factoextra)))
+suppressMessages(suppressWarnings(library(cluster)))
+suppressMessages(suppressWarnings(library(grid)))
+suppressMessages(suppressWarnings(library(datawizard)))
+
+theta  <- cadena1_M6$THETA[c(1:25)]
+sigma2 <- sqrt(cadena1_M6$THETA[c(26:50)])
+theta_est  <- colMeans(theta)
+sigma2_est <- colMeans(sigma2)
+arreglo <- data.frame(theta_est=normalize(theta_est),
+                      sigma2_est=normalize(sigma2_est))
+rownames(arreglo) <- unique(Data$Dominio)
+arreglo
+
+# Paso 1: Calcular la matriz de distancias entre los dominios
+dist_matrix <- get_dist(arreglo, method = "euclidian", stand = F)
+                        
+# Paso 2: Realizar la agrupación jerárquica
+set.seed(2013)
+hclust_result <- hclust(dist_matrix, method = "complete")
+# Paso 3: Obtener la segmentación en cuatro grupos
+groups <- cutree(hclust_result, k = 4)
+
+# Paso 4: Mostrar los resultados
+results <- data.frame(Grupo = as.factor(groups), arreglo)
+results 
+
+# Paso 5: Ordenar los grupos y los colores según el orden de las ramas
+order <- order.dendrogram(as.dendrogram(hclust_result))
+groups <- groups[order]
+colores <- c("red", "blue", "green", "darkorange")
+colores_grupo <- colores[groups]
+
+# Paso 6: Graficar el dendrograma con los nombres de las hojas
+plot(hclust_result, main = "Dendrograma de Segmentación", cex= 0.45,
+     xlab= "Distancias entre individuos", ylab="Pesos",check = T,ann = T, hang = -1)
+rect.hclust(hclust_result, k = 4, border = unique(colores_grupo))
+# Paso 7: Ajustar la leyenda
+legend("topright", legend = c("Grupo 1", "Grupo 2", "Grupo 3", "Grupo 4"),
+       col = colores, lty = 1, lwd = 2)
+
+# fviz_cluster(list(data = arreglo, cluster = groups))
+library(ggrepel)
+clases_aj <- cutree(hclust_result, k = 4)
+results$Grupo <- clases_aj
+results$Etiqueta <- rownames(results)
+ggplot() + geom_text_repel(aes(x = theta_est, y = sigma2_est, color = Grupo, label = Etiqueta), 
+                           data = results, size = 2) +
+      geom_point(aes(x = theta_est, y = sigma2_est, color = Grupo), data = results, size = 0.5) +
+      scale_colour_gradientn(colours= colores) +
+      ggtitle('Agrupamiento Jerárquico en 4 grupos') + 
+      xlab(expression(hat(theta))) + ylab(expression(hat(sigma))) 
+
+```
 
